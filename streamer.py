@@ -68,15 +68,30 @@ def stream_video():
 
     # Get range header from client for determining what part of video to send
     range_header = request.headers.get('Range', None)
-    
+    #
     #DEBUGGING
     if DEBUG_MODE:
         print(request.headers)
         
     # exit if no header return
     if not range_header:
-        print(f"INVALID RANGE HEADER")
-        sys.exit(416)
+        # ERROR FLAG INVALID RANGE
+        # print(f"INVALID RANGE HEADER")
+        # sys.exit(416)
+        content_length = end - start + 1
+    
+        # Create a Flask Response object that will iterate gnerate_video_stream() until file stream is complete 
+        # HTTP status 206 indicates partial data sent
+        response = Response(
+            generate_video_stream(video_path, start, end),
+            status=206,
+            mimetype='video/mp4'
+        )
+        
+        response.headers.add('Content-Length', str(content_length))
+        
+        return response
+        
 
     # Remove the "bytes=" prefix and split the range into start and end.
     # range_value = "bytes=X-Y"
