@@ -21,8 +21,9 @@ media-controller {
     --media-icon-color: #b6140f;
     --media-control-background: #38322b;
     --media-control-hover-background: #ce5412;
+    --media-primary-color: #b6140f;
 }
-
+/*
 #vid {
     width: 80%;
 }
@@ -33,11 +34,10 @@ media-controller {
 
 #chatctrl {
     visibility: hidden;
-}
+}*/
 
-.flex-row {
+.vidcontainer {
     min-width:1000px;
-    width:70%;
-    margin-left: auto;
-    margin-right: auto;
+    width:50%;
+    margin: auto;
 }
