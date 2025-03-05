@@ -17,6 +17,10 @@ h1 {
     font-size: 60px;
 }
 
+h2, h5 {
+    text-align: center;
+}
+
 media-controller {
     --media-icon-color: #b6140f;
     --media-control-background: #38322b;
@@ -36,7 +40,7 @@ media-controller {
     visibility: hidden;
 }*/
 
-.vidcontainer {
+.videoContainer {
     min-width:1000px;
     width:50%;
     margin: auto;
