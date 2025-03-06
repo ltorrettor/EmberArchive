@@ -27,21 +27,17 @@ media-controller {
     --media-control-hover-background: #ce5412;
     --media-primary-color: #b6140f;
 }
-/*
-#vid {
-    width: 80%;
-}
 
-#chat {
-    width: 20%;
-}
-
-#chatctrl {
-    visibility: hidden;
-}*/
-
-.videoContainer {
+#streamContainer {
     min-width:1000px;
     width:50%;
     margin: auto;
+}
+
+#videoContainer {
+    width: 80%;
+}
+
+#chatlog {
+    width: 20%;
 }
