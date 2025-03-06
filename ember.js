@@ -60,10 +60,18 @@ const getVideoTime = async () => {
             let commentCreationOffset = jsonData.comments[i].content_offset_seconds;
 
             if (commentCreationOffset <= videoTime) {
-                // Craft the comment using the information in the JSON file
-                let message = document.createElement('p');
-                message.innerHTML = '[' + jsonData.comments[i].created_at.slice(11, 19) + '] ' + jsonData.comments[i].commenter.display_name + ': ' + jsonData.comments[i].message.body;
-                document.getElementById('chatlog').appendChild(message);
+                let timestamp = document.createElement('span');
+                let username = document.createElement('span');
+                let message = document.createElement('span');
+                timestamp.innerHTML = '[' + jsonData.comments[i].created_at.slice(11, 19) + '] ';
+                username.innerHTML = jsonData.comments[i].commenter.display_name;
+                username.style.color = jsonData.comments[i].message.user_color;
+                message.innerHTML = ': ' + jsonData.comments[i].message.body;
+                document.getElementById('chatContainer').appendChild(timestamp);
+                document.getElementById('chatContainer').appendChild(username);
+                document.getElementById('chatContainer').appendChild(message);
+                document.getElementById('chatContainer').appendChild(document.createElement('br'));
+                document.getElementById('chatContainer').appendChild(document.createElement('br'));
                 jsonData.comments.splice(i, 1);
             }
         }

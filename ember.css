@@ -30,14 +30,23 @@ media-controller {
 
 #streamContainer {
     min-width:1000px;
-    width:50%;
+    width:70%;
     margin: auto;
 }
 
 #videoContainer {
-    width: 80%;
+    width: 74%;
 }
 
-#chatlog {
-    width: 20%;
+#chatContainer {
+    overflow-y: scroll;
+    min-height: inherit;
+    width: 25%;
+    margin-left: 1%;
+    padding: 8px;
+    background-color: #18181b;
+}
+
+span {
+    color: white;
 }
