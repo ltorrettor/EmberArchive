@@ -11,10 +11,12 @@
 
     <body>
         <div class="header">
-            <img src="./ember-logo.png" style="width:60px; padding: 10px;">
-            <h1 style="display: flex">Ember Archive</h1>
+            <a href="index.html">
+                <img src="./ember-logo.png" style="width:60px; padding: 10px;">
+                <h1 style="display: flex">Ember Archive</h1>
+            </a>
         </div>
-        <div id="streamContainer" class="d-flex p-2">
+        <div id="streamContainer" class="d-flex p-2 container-lg">
             <media-controller id="videoContainer" class="p-2">
                 <video slot="media" id="video"></video>
                 <!--<media-play-button slot="centered-chrome" id="centervidplay"></media-play-button>-->
@@ -35,12 +37,23 @@
                 </media-control-bar>
             </media-controller>
             
-            <div id="chatContainer">
+            <div id="chatContainer" class="p-2">
             </div>
+
+            <button type="button" class="btn btn-outline-danger position-absolute bottom-0 end-0" id="fullScreenButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                    <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/>
+                </svg>
+            </button>
         </div>
-        <h5 id="time"></h3>
-        <h2 id="streamer"></h2>
-        <h2 id="videoTitle"></h2>
+
+        <div id="infoContainer" class="container-lg">
+            
+            <h5 id="time"></h3>
+            <h2 id="streamer"></h2>
+            <h2 id="videoTitle"></h2>
+        </div>
+
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

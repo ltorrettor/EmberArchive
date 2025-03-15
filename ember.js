@@ -14,9 +14,11 @@ const checkVideoData = async () => {
    
 const displayVideoData = async () => {
     let jsonData = await checkVideoData();
+    const videoTitle = jsonData.video.title;
     document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
     document.getElementById('streamer').innerHTML = jsonData.streamer.name;
-    document.getElementById('videoTitle').innerHTML = jsonData.video.title;
+    document.getElementById('videoTitle').innerHTML = videoTitle;
+    document.title = videoTitle + ' - Ember Archive';
 }
 
 // https://stackoverflow.com/a/3177838
@@ -47,7 +49,7 @@ function timeSince(date) {
     return Math.floor(seconds) + " seconds";
 }
 
-// Code modified from https://github.com/JZimz/tmi-utils to fit the data gotten from TwitchDownloader for the next two functions
+// Code modified from https://github.com/JZimz/tmi-utils to fit the data received from TwitchDownloader for the next two functions
 
 function getEmoteAsUrl (id, theme = 'light', scale = '1.0') {
     return `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/${theme}/${scale}`;
@@ -106,61 +108,84 @@ function parseEmotesInMessage (emotes, msg) {
     return result;
 };
 
-// Compare time offsets to decide when to post a comment
-const getVideoTime = async () => {
-    let jsonData = await checkVideoData();
-    let video = document.getElementById('video');
-    let videoOffset = jsonData.video.start;
-    // Make this for only while the video is playing or something
-    setInterval(function() {
-        let videoTime = videoOffset + Math.floor(video.currentTime);
+function postComments(jsonData, video, videoOffset) {
+    // Compare time offsets to decide when to post a comment
+    const videoTime = videoOffset + Math.floor(video.currentTime);
 
-        for (let i = 0; i < jsonData.comments.length; i++) {
-            let commentCreationOffset = jsonData.comments[i].content_offset_seconds;
+    for (let i = 0; i < jsonData.comments.length; i++) {
+        const commentCreationOffset = jsonData.comments[i].content_offset_seconds;
 
-            if (commentCreationOffset <= videoTime) {
-                // add a semicolon before the message 
-                const parsedMessage = parseEmotesInMessage(jsonData.comments[i].message.emoticons, jsonData.comments[i].message.body);
-                const timestamp = document.createElement('span');
-                const username = document.createElement('span');
-                const message = document.createElement('span');
+        if (commentCreationOffset <= videoTime) {
+            // add a semicolon before the message 
+            const parsedMessage = parseEmotesInMessage(jsonData.comments[i].message.emoticons, jsonData.comments[i].message.body);
+            const timestamp = document.createElement('span');
+            const username = document.createElement('span');
+            const message = document.createElement('span');
 
-                message.append(': ');
-                for (let i = 0; i < parsedMessage.length; i++) {
-                    console.log(parsedMessage[i].value);
-                //parsedMessage.forEach(({ type, value, raw }) => {
-                    if (parsedMessage[i].type === 'emote') {
-                      const img = new Image();
-                      // Converts the emote id to URL
-                      img.src = getEmoteAsUrl(parsedMessage[i].value);
-                      // Raw is the original emote text (e.g. LUL)
-                      img.alt = parsedMessage[i].raw;
-                      img.title = parsedMessage[i].raw;
-                
-                      message.append(img);
-                    } else {
-                      message.append(parsedMessage[i].value);
-                    }
+            message.append(': ');
+            for (let i = 0; i < parsedMessage.length; i++) {
+            //parsedMessage.forEach(({ type, value, raw }) => {
+                if (parsedMessage[i].type === 'emote') {
+                const img = new Image();
+                // Converts the emote id to URL
+                img.src = getEmoteAsUrl(parsedMessage[i].value);
+                // Raw is the original emote text (e.g. LUL)
+                img.alt = parsedMessage[i].raw;
+                img.title = parsedMessage[i].raw;
+            
+                message.append(img);
+                } else {
+                message.append(parsedMessage[i].value);
                 }
-
-                timestamp.innerHTML = '[' + jsonData.comments[i].created_at.slice(11, 19) + '] ';
-                username.innerHTML = jsonData.comments[i].commenter.display_name;
-                username.style.color = jsonData.comments[i].message.user_color;
-
-                document.getElementById('chatContainer').appendChild(timestamp);
-                document.getElementById('chatContainer').appendChild(username);
-                document.getElementById('chatContainer').appendChild(message);
-                document.getElementById('chatContainer').appendChild(document.createElement('br'));
-                document.getElementById('chatContainer').appendChild(document.createElement('br'));
-                jsonData.comments.splice(i, 1);
             }
+            // Actually create and append the comment
+            timestamp.innerHTML = '[' + jsonData.comments[i].created_at.slice(11, 19) + '] ';
+            username.innerHTML = jsonData.comments[i].commenter.display_name;
+            username.style.color = jsonData.comments[i].message.user_color;
+
+            document.getElementById('chatContainer').appendChild(timestamp);
+            document.getElementById('chatContainer').appendChild(username);
+            document.getElementById('chatContainer').appendChild(message);
+            document.getElementById('chatContainer').appendChild(document.createElement('br'));
+            document.getElementById('chatContainer').appendChild(document.createElement('br'));
+            jsonData.comments.splice(i, 1);
         }
-    }, 1000);
+    }
+}
+
+const getVideoTime = async () => {
+    const jsonData = await checkVideoData();
+    const video = document.getElementById('video');
+    const videoOffset = jsonData.video.start;
+    setInterval(postComments, 1000, jsonData, video, videoOffset);
 }
 
 document.getElementById('video').src = './video.mp4';
 displayVideoData();
 getVideoTime();
+
+// Toggle Fullscreen
+document.getElementById('fullScreenButton').onclick = function () {
+    const fullElem = document.fullscreenElement;
+    if (fullElem == null) {
+        const elem = document.getElementById('streamContainer');
+        if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
+}
 
 /*
 document.getElementById('fullvidplay').onclick = function () {

@@ -12,13 +12,19 @@ body {
     justify-content:center;
 }
 
+a {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
 h1 {
     text-align: center;
     font-size: 60px;
 }
 
 h2, h5 {
-    text-align: center;
+
 }
 
 media-controller {
@@ -29,22 +35,40 @@ media-controller {
 }
 
 #streamContainer {
-    min-width:1000px;
-    width:70%;
+    position: relative;
+    width: 70%;
+    min-width: 1000px;
+    max-height: 800px;
     margin: auto;
+    background-color: #38322b;
 }
 
 #videoContainer {
     width: 74%;
+    border: 4px black solid;
 }
 
 #chatContainer {
     overflow-y: scroll;
-    min-height: inherit;
-    width: 25%;
+    max-height: inherit;
+    width: 22%;
     margin-left: 1%;
     padding: 8px;
     background-color: #18181b;
+}
+
+#infoContainer {
+    width: 70%;
+    min-width: 1000px;
+    margin: auto;
+    padding: 0px 20px 20px 20px;
+    background-color: #38322b;
+    color: white;
+}
+
+#fullScreenButton {
+    margin-right: 2px;
+    margin-bottom: 10px;
 }
 
 span {
