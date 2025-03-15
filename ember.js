@@ -158,6 +158,7 @@ const getVideoTime = async () => {
     }, 1000);
 }
 
+document.getElementById('video').src = './video.mp4';
 displayVideoData();
 getVideoTime();
 
