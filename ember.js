@@ -147,8 +147,6 @@ const getVideoTime = async () => {
                 username.innerHTML = jsonData.comments[i].commenter.display_name;
                 username.style.color = jsonData.comments[i].message.user_color;
 
-
-                //message.innerHTML = ': ' + jsonData.comments[i].message.body;
                 document.getElementById('chatContainer').appendChild(timestamp);
                 document.getElementById('chatContainer').appendChild(username);
                 document.getElementById('chatContainer').appendChild(message);
