@@ -2,7 +2,7 @@
 
 
 
-from flask import Flask, Response, request, abort
+from flask import Flask, Response, request, abort, send_from_directory
 import os
 import sys
 
@@ -142,6 +142,10 @@ def stream_video():
     message = error_messages.get(error_num, f"{error_num}")
     abort(400, description=message)
 """
+
+@app.route('/<path:path>')
+def send_report(path):
+    return send_from_directory('player', path)
 
 if __name__ == '__main__':
     print('Hosting on port 8000...')
