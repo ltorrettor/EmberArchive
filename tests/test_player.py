@@ -28,8 +28,7 @@ def test_include_bootstrap(client):
 
 def test_serve_logo(client):
     response = client.get("/files/ember-logo.png")
-    # assert response.status_code == 200
-    assert response.status_code == 404
+    assert response.status_code == 200
 
 def test_serve_chat(client):
     response = client.get("/files/chat.json")
