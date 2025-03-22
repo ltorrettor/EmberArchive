@@ -10,6 +10,7 @@ body {
     display:flex;
     align-items:center;
     justify-content:center;
+    margin-top: 20px;
 }
 
 a {
@@ -36,12 +37,25 @@ h1 {
 }
 
 .channel {
+    display: flex;
     border: 2px solid white;
-    margin: 10px;
+    margin: 50px;
     padding: 10px;
 }
 
+.channelLogo {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    border: 2px solid red;
+}
+
+.channelInfoContainer {
+    margin-left: 20px;
+}
+
 .channelTitle {
+    display: block;
     font-size: 40px;
 }
 
