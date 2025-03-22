@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/47604112
 const checkVideoData = async () => {
-    let videoData = await fetch(`../files/chat.json`)
+    let videoData = await fetch(`./files/chat.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);
@@ -18,6 +18,9 @@ const displayVideoData = async () => {
     document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
     document.getElementById('streamer').innerHTML = jsonData.streamer.name;
     document.getElementById('videoTitle').innerHTML = videoTitle;
+
+    document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
+    document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
     document.title = videoTitle + ' - Ember Archive';
 }
 
@@ -160,13 +163,14 @@ const getVideoTime = async () => {
     setInterval(postComments, 1000, jsonData, video, videoOffset);
 }
 
-document.getElementById('video').src = '../files/video.mp4';
+document.getElementById('video').src = './files/video.mp4';
 displayVideoData();
 getVideoTime();
 
 // Toggle Fullscreen
 document.getElementById('fullScreenButton').onclick = function () {
     const fullElem = document.fullscreenElement;
+    const button = document.getElementById('fullScreenButton');
     if (fullElem == null) {
         const elem = document.getElementById('streamContainer');
         if (elem.requestFullscreen) {
@@ -176,6 +180,7 @@ document.getElementById('fullScreenButton').onclick = function () {
         } else if (elem.msRequestFullscreen) { /* IE11 */
         elem.msRequestFullscreen();
         }
+        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen-exit" viewBox="0 0 16 16"><path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/></svg>'
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -184,6 +189,7 @@ document.getElementById('fullScreenButton').onclick = function () {
         } else if (document.msExitFullscreen) { /* IE11 */
             document.msExitFullscreen();
         }
+        button.innerHTML = '<svg type="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16" id="screenSizeToggle"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>'
     }
 }
 
@@ -208,4 +214,3 @@ document.getElementById('vidfwd').onclick = function () {
     document.getElementById('chatfwd').click();
 };
 */
-
