@@ -1,4 +1,5 @@
-from backend import create_app
+import cli
+from __init__ import create_app
 
 if __name__ == '__main__':
     print('Visit http://localhost:8000/index.html for the player demo')
