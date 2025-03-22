@@ -44,13 +44,13 @@ const generateChannels = async () => {
     console.log(jsonData.channels.length);
     for (let i = 0; i < jsonData.channels.length; i++) {
         const channel = document.createElement('div');
-        channel.innerHTML = jsonData.channels[i].name + '<br>'
-            + jsonData.channels[i].video_count + ' videos<br>'
-            + timeSince(new Date(jsonData.channels[i].latest_video.slice(0, 10))) + ' ago<br>';
+        channel.innerHTML = '<div class="channelTitle">' + jsonData.channels[i].name + '</div><br>'
+            + '<span class="videoCount">' + jsonData.channels[i].video_count + ' videos </span>'
+            + '<span class="lastVideo"> latest video ' + timeSince(new Date(jsonData.channels[i].latest_video.slice(0, 10))) + ' ago</span>'
+            + '<br><br>';
             channel.className = 'channel';
         document.getElementById('channelContainer').appendChild(channel);
     }
-    jsonData.foreach((channel) => console.log(jsonData.channels.name));
 }
 
 generateChannels();

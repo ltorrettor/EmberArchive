@@ -40,3 +40,16 @@ h1 {
     margin: 10px;
     padding: 10px;
 }
+
+.channelTitle {
+    font-size: 40px;
+}
+
+.videoCount {
+    display: inline-block;
+    width: 200px;
+}
+
+.lastVideo {
+    margin-left: 20px;
+}
