@@ -5,13 +5,6 @@ parser = argparse.ArgumentParser(description = 'Parser that will parse the comma
 
 # a list of arguments passed through the cli
 
-# help flag
-# a flag when given to the CLI will print a help message containing this and other flags and what they do
-parser.add_argument(
-    '-h', '--help', 
-    help = 'prints this help message about the name and version of this program and the rest of the CLI arguments and what they do'
-)
-
 # binding flag
 # a flag which will bind the web server to the str argument (address) that is given
 parser.add_argument(
