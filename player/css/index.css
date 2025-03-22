@@ -32,5 +32,11 @@ h1 {
 }
 
 #channelContainer {
-    border: 4px solid white;
+    color: white;
+}
+
+.channel {
+    border: 2px solid white;
+    margin: 10px;
+    padding: 10px;
 }

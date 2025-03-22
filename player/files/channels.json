@@ -1,0 +1,8 @@
+{
+    "channels":
+    [
+        {"name": "Cheesy", "video_count": 20, "latest_video": "2025-03-02T155124Z"},
+        {"name": "DumbDog", "video_count": 120, "latest_video": "2021-03-02T155124Z"},
+        {"name": "Coestar", "video_count": 42069, "latest_video": "1984-02-30T105124Z"}
+    ]
+}
