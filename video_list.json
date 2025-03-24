@@ -1,0 +1,42 @@
+[
+  {
+    "Directory": "root",
+    "Files": [
+      {
+        "Title": "LoremIpsum",
+        "size": 6162441,
+        "filetype": ".mp4",
+        "length": 59.977007
+      },
+      {
+        "Title": "video",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "length": 330.05
+      }
+    ]
+  },
+  {
+    "Directory": "test_dir",
+    "Files": [
+      {
+        "Title": "LoremIpsum",
+        "size": 6162441,
+        "filetype": ".mp4",
+        "length": 59.977007
+      },
+      {
+        "Title": "video1",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "length": 330.05
+      },
+      {
+        "Title": "video",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "length": 330.05
+      }
+    ]
+  }
+]

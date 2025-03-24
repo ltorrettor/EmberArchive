@@ -4,6 +4,11 @@ from flask import Flask, Response, request, abort, send_from_directory
 import os
 import sys
 
+#TEMP REGISTRY
+VIDEO_REGISTRY = {
+    "1": "./temp_video/video.mp4"
+}
+
 def create_app():
     CHUNK_SIZE = 1024 * 1024 # CHUNK_SIZE set to 1mb default, may help to adjust this for performance/memory
     DEBUG_MODE = True
