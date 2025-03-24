@@ -63,6 +63,7 @@ def get_file_list(directory, output_filename = "video_list.json" ):
     for directory in path.iterdir():
         if directory.is_dir():
             
+            #rglob searches Path objects recursively for a specified pattern
             for file in directory.rglob("*"):
                 if file.is_file():
                     details = get_file_details(file)
