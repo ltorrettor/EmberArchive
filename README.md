@@ -18,3 +18,7 @@ Ember Archive is a self-hosted video-on-demand platform designed to help archiva
 2. Install the requirements with `pip install -r requirements.txt`
 3. Run the tests with `python -m pytest`
 4. Run the demo program with `python -m backend`, and visit http://localhost:8000/index.html to mess around with the video player
+
+### System dependencies
+0. ffmpeg: version 7.1.1
+    for system tool ffprobe
