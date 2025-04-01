@@ -1,16 +1,10 @@
 import argparse
+from pathlib import Path
 
 # creates a parser which will parse commands entered through the CLI
 parser = argparse.ArgumentParser(description = 'Parser that will parse the command arguments for a CLI')
 
 # a list of arguments passed through the cli
-
-# help flag
-# a flag when given to the CLI will print a help message containing this and other flags and what they do
-parser.add_argument(
-    '-h', '--help', 
-    help = 'prints this help message about the name and version of this program and the rest of the CLI arguments and what they do'
-)
 
 # binding flag
 # a flag which will bind the web server to the str argument (address) that is given
@@ -38,3 +32,15 @@ parser.add_argument(
     type=str,
     required=True
 )
+
+# parses the arguments
+arguments = parser.parse_args()
+
+# stores the directory path into  a path variable
+path = Path(arguments.directory)
+
+# a set of all the files we actually care about
+file_extensions = {".mp4", ".mkv", ".avi", ".mov", ".flv", ".wmv", ".webm", "json"}
+
+# list comprension to sort the files in the directory to only be the accepted file extensions
+ea_files = [file for file in path.rglob("*") if file.suffix.lower() in file_extensions]

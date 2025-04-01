@@ -1,0 +1,66 @@
+[
+  {
+    "Directory": "uncategorized",
+    "Files": [
+      {
+        "Title": "LoremIpsum",
+        "size": 6162441,
+        "filetype": ".mp4",
+        "target": "temp_video/LoremIpsum.mp4",
+        "lastmodified": "2025-03-03T00:34:30.507665",
+        "chat": "None",
+        "length": 59.977007
+      },
+      {
+        "Title": "video",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "target": "temp_video/video.mp4",
+        "lastmodified": "2025-03-23T22:36:34.920658",
+        "chat": "temp_video/video.json",
+        "length": 330.05
+      }
+    ]
+  },
+  {
+    "Directory": "test_dir",
+    "Files": [
+      {
+        "Title": "LoremIpsum copy",
+        "size": 6162441,
+        "filetype": ".mp4",
+        "target": "temp_video/test_dir/LoremIpsum copy.mp4",
+        "lastmodified": "2025-03-24T13:24:01.442403",
+        "chat": "None",
+        "length": 59.977007
+      },
+      {
+        "Title": "LoremIpsum",
+        "size": 6162441,
+        "filetype": ".mp4",
+        "target": "temp_video/test_dir/LoremIpsum.mp4",
+        "lastmodified": "2025-03-24T11:05:55.056828",
+        "chat": "None",
+        "length": 59.977007
+      },
+      {
+        "Title": "video1",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "target": "temp_video/test_dir/video1.mp4",
+        "lastmodified": "2025-03-24T11:05:57.749475",
+        "chat": "temp_video/test_dir/video1.json",
+        "length": 330.05
+      },
+      {
+        "Title": "video",
+        "size": 22964171,
+        "filetype": ".mp4",
+        "target": "temp_video/test_dir/video.mp4",
+        "lastmodified": "2025-03-24T11:06:09.094986",
+        "chat": "temp_video/test_dir/video.json",
+        "length": 330.05
+      }
+    ]
+  }
+]
