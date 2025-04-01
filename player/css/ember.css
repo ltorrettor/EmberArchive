@@ -1,9 +1,9 @@
 html {
-    background-color: #695b5a;
+    background-color: #0e0e10;
 }
 
 body {
-    background-color: #695b5a;
+    background-color: #0e0e10;
 }
 
 .header {
@@ -23,24 +23,33 @@ h1 {
     font-size: 60px;
 }
 
-h2, h5 {
+#emberTitle {
+    color: #b6140f;
+}
 
+#archiveTitle {
+    color: #ce5412;
 }
 
 media-controller {
     --media-icon-color: #b6140f;
-    --media-control-background: #38322b;
-    --media-control-hover-background: #ce5412;
+    --media-menu-item-hover-color: green;
+    --media-control-background: #18181b;
+    --media-control-hover-background: #494948;
+    --media-menu-opacity: 0.2;
     --media-primary-color: #b6140f;
+    --media-secondary-color: #201d1d;
 }
 
 #streamContainer {
     position: relative;
     width: 70%;
-    min-width: 1000px;
-    max-height: 800px;
+    min-width: 800px;
+    min-height: 400px;
+    max-width: 1200px;
+    max-height: 600px;
     margin: auto;
-    background-color: #38322b;
+    background-color: #18181b;
 }
 
 #videoContainer {
@@ -50,25 +59,28 @@ media-controller {
 
 #chatContainer {
     overflow-y: scroll;
-    max-height: inherit;
     width: 22%;
-    margin-left: 1%;
     padding: 8px;
     background-color: #18181b;
 }
 
 #infoContainer {
     width: 70%;
-    min-width: 1000px;
+    min-width: 800px;
+    max-width: 1200px;
     margin: auto;
     padding: 0px 20px 20px 20px;
-    background-color: #38322b;
+    background-color: #18181b;
     color: white;
 }
 
 #fullScreenButton {
-    margin-right: 2px;
-    margin-bottom: 10px;
+    margin-right: 4px;
+    margin-bottom: 8px;
+}
+
+#gameInfoContainer {
+    text-align: right; 
 }
 
 span {
