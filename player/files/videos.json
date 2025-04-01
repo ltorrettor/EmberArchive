@@ -1,0 +1,102 @@
+[
+    {
+      "Directory": "Small Streamer",
+      "Files": [
+        {
+          "Title": "MarioKart_RainbowRoad_Speedrun_Fail",
+          "size": 2147483648,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/MarioKart_RainbowRoad_Speedrun_Fail.mp4",
+          "lastmodified": "2025-04-01T18:30:00.000000",
+          "chat": "Twitch_Archives/MarioKart_RainbowRoad_Speedrun_Fail_chat.txt",
+          "length": 7200.0
+        },
+        {
+          "Title": "MarioMaker_InsaneLevel_FirstClear",
+          "size": 3221225472,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/MarioMaker_InsaneLevel_FirstClear.mp4",
+          "lastmodified": "2025-04-02T20:15:00.000000",
+          "chat": "Twitch_Archives/MarioMaker_InsaneLevel_FirstClear_reactions.json",
+          "length": 5400.5
+        },
+        {
+          "Title": "Zelda_BOTW_MasterMode_BlindPlaythrough",
+          "size": 4294967296,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/Zelda_BOTW_MasterMode_BlindPlaythrough.mp4",
+          "lastmodified": "2025-04-03T15:45:00.000000",
+          "chat": "Twitch_Archives/Zelda_BOTW_MasterMode_BlindPlaythrough_highlights.txt",
+          "length": 9000.0
+        },
+        {
+          "Title": "COD_Warzone_SquadWipe_Clutch",
+          "size": 2684354560,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/COD_Warzone_SquadWipe_Clutch.mp4",
+          "lastmodified": "2025-04-04T22:00:00.000000",
+          "chat": "Twitch_Archives/COD_Warzone_SquadWipe_Clutch_emotes.csv",
+          "length": 3600.25
+        },
+        {
+          "Title": "MarioParty_MiniGame_Mayhem",
+          "size": 1610612736,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/MarioParty_MiniGame_Mayhem.mp4",
+          "lastmodified": "2025-04-05T19:30:00.000000",
+          "chat": "Twitch_Archives/MarioParty_MiniGame_Mayhem_predictions.json",
+          "length": 4800.0
+        },
+        {
+          "Title": "Zelda_OOT_AnyPercent_WorldRecordAttempt",
+          "size": 3758096384,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/Zelda_OOT_AnyPercent_WorldRecordAttempt.mp4",
+          "lastmodified": "2025-04-06T12:15:00.000000",
+          "chat": "Twitch_Archives/Zelda_OOT_AnyPercent_WorldRecordAttempt_timeline.txt",
+          "length": 8100.75
+        }
+    ]
+},
+{
+    "Directory": "Big Streamer",
+      "Files": [
+        {
+          "Title": "COD_ModernWarfare_SniperMontage",
+          "size": 2949120000,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/COD_ModernWarfare_SniperMontage.mp4",
+          "lastmodified": "2025-04-07T14:00:00.000000",
+          "chat": "Twitch_Archives/COD_ModernWarfare_SniperMontage_clips.json",
+          "length": 2700.0
+        },
+        {
+          "Title": "MarioKart_CustomTracks_CommunityRace",
+          "size": 1932735283,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/MarioKart_CustomTracks_CommunityRace.mp4",
+          "lastmodified": "2025-04-08T21:00:00.000000",
+          "chat": "Twitch_Archives/MarioKart_CustomTracks_CommunityRace_participants.csv",
+          "length": 6300.5
+        },
+        {
+          "Title": "Zelda_TOTK_Glitchless_Exploration",
+          "size": 4026531840,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/Zelda_TOTK_Glitchless_Exploration.mp4",
+          "lastmodified": "2025-04-09T16:30:00.000000",
+          "chat": "Twitch_Archives/Zelda_TOTK_Glitchless_Exploration_notes.txt",
+          "length": 9900.0
+        },
+        {
+          "Title": "COD_ColdWar_Zombies_HighRound",
+          "size": 3489660928,
+          "filetype": ".mp4",
+          "target": "Twitch_Archives/COD_ColdWar_Zombies_HighRound.mp4",
+          "lastmodified": "2025-04-10T23:45:00.000000",
+          "chat": "Twitch_Archives/COD_ColdWar_Zombies_HighRound_strategy.json",
+          "length": 7800.25
+        }
+      ]
+    }
+  ]

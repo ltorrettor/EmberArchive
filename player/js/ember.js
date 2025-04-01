@@ -151,7 +151,7 @@ function postComments(jsonData, video, videoOffset) {
             document.getElementById('chatContainer').appendChild(message);
             document.getElementById('chatContainer').appendChild(document.createElement('br'));
             document.getElementById('chatContainer').appendChild(document.createElement('br'));
-            jsonData.comments.splice(i, 1);
+            jsonData.comments.splice(i--, 1);
         }
     }
 }

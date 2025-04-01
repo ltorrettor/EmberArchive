@@ -39,20 +39,20 @@ function timeSince(date) {
 }
 
 
+// Populate the website with a box for each channel
 const generateChannels = async () => {
     const jsonData = await checkChannelData();
-    console.log(jsonData.channels.length);
-    for (let i = 0; i < jsonData.channels.length; i++) {
-        const channel = document.createElement('div');
-        channel.innerHTML = '<img src="" class="channelLogo">'
+    jsonData.channels.forEach (channel=> {
+        const channelContainer = document.createElement('div');
+        channelContainer.innerHTML = '<img src="" class="channelLogo">'
             + '<div class="channelInfoContainer">'
-            + '<div class="channelTitle">' + jsonData.channels[i].name + '</div><br>'
-            + '<span class="videoCount">' + jsonData.channels[i].video_count + ' videos </span>'
-            + '<span class="lastVideo"> latest video ' + timeSince(new Date(jsonData.channels[i].latest_video.slice(0, 10))) + ' ago</span></div>'
+            + '<div class="channelTitle">' + channel.name + '</div><br>'
+            + '<span class="videoCount">' + channel.video_count + ' videos </span>'
+            + '<span class="lastVideo"> latest video ' + timeSince(new Date(channel.latest_video.slice(0, 10))) + ' ago</span></div>'
             + '<br><br>';
-            channel.className = 'channel';
-        document.getElementById('channelContainer').appendChild(channel);
-    }
+            channelContainer.className = 'channel';
+        document.getElementById('channelContainer').appendChild(channelContainer);
+    });
 }
 
 generateChannels();
