@@ -55,6 +55,5 @@ def get_file_list(directory, output_filename = "video_list.json" ):
             cur_video = Video.Video(file)
             # add video to the channel
             channels[channel_name].add_video(cur_video)
-    print(channels)
     return channels
             
