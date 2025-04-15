@@ -1,4 +1,4 @@
-import Video
+from . import Video
 class Channel:
     def __init__(self, name):
         self.__name = name

@@ -26,7 +26,8 @@ class Video:
         else:
             self.__title = file_name
         # get the duration of the video in seconds
-        self.__duration = VideoFileClip(file).duration
+        # self.__duration = VideoFileClip(file).duration
+        self.__duration = None
     
     # set of getters
     def get_file_path(self):

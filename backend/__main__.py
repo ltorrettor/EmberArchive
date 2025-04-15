@@ -1,7 +1,7 @@
-import cli
-from __init__ import create_app
+from . import cli
+from . import create_app
 from flask import Flask
-import scanner
+from . import scanner
 
 app = Flask(__name__)
 
@@ -18,6 +18,7 @@ if __name__ == '__main__':
     print('Visit http://localhost:8000/index.html for the player demo')
     # dictionary of channels with the key being channel name and the value being a channel object
     channels = scanner.get_file_list(directory)
+    print
     for channel_name in channels:
         print(f"{channel_name}: ")
         channel = channels[channel_name]

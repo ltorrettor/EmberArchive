@@ -1,8 +1,8 @@
 import json
 import sys
 import subprocess
-import Video
-import Channel
+from . import Video
+from . import Channel
 from datetime import datetime
 from pathlib import Path
 
