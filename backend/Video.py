@@ -1,7 +1,6 @@
 import re
 from moviepy import VideoFileClip
 from pathlib import Path
-from datetime import datetime
 
 class Video:
     def __init__(self, file):
@@ -21,8 +20,9 @@ class Video:
             self.__date = date.group()
         else:
             self.__date = "Unknown"
-
-        self.__title = file_name.replace(self.__date, "")
+        # Unknown might be in the title so don't wanna remove it if it is
+        if (self.__date != "Unknown"):
+            self.__title = file_name.replace(self.__date, "")
         # get the duration of the video in seconds
         self.__duration = VideoFileClip(file).duration
     
