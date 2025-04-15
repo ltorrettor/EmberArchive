@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 from backend import Video, Channel, cli
 
 # tests for the cli

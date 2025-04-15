@@ -23,6 +23,8 @@ class Video:
         # Unknown might be in the title so don't wanna remove it if it is
         if (self.__date != "Unknown"):
             self.__title = file_name.replace(self.__date, "")
+        else:
+            self.__title = file_name
         # get the duration of the video in seconds
         self.__duration = VideoFileClip(file).duration
     
