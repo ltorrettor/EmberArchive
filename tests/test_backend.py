@@ -19,7 +19,7 @@ def test_given_all_args():
 def test_directory_is_required():
     parser = cli.create_parser()
     
-    with pytest.raises(SystemError):
+    with pytest.raises(SystemExit):
         parser.parse_args([])
 
 def test_default_bind_and_port():
@@ -46,7 +46,7 @@ def test_error_given_wrong_type():
     parser = cli.create_parser()
     
     # give the parser a string instead of int port should raise an error
-    with pytest.raises(SystemError):
+    with pytest.raises(SystemExit):
         parser.parse_args(['-b', "192.0.2.5", '-P', 'hi', '-d', '.\\test_videos'])
 
 def test_bind_incorrect_format():
@@ -54,7 +54,7 @@ def test_bind_incorrect_format():
     parser = cli.create_parser()
     
     # incorrect formatted bind is passed therefore there should be an error thrown
-    with pytest.raises(SystemError):
+    with pytest.raises(SystemExit):
         parser.parse_args(['-b', "this.is.an.error", '-P', 8000, '-d', '.\\test_videos'])
     
 
