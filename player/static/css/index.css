@@ -61,9 +61,11 @@ h1 {
 
 .videoCount {
     display: inline-block;
+    font-size: 24px;
     width: 200px;
 }
 
 .lastVideo {
+    font-size: 24px;
     margin-left: 20px;
 }

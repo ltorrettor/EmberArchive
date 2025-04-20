@@ -1,5 +1,5 @@
 const checkChannelData = async () => {
-    let channelData = await fetch(`./files/channels.json`)
+    let channelData = await fetch(`../files/channels.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);

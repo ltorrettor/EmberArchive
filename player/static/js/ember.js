@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/47604112
 const checkVideoData = async () => {
-    let videoData = await fetch(`./files/chat.json`)
+    const videoData = await fetch(`../files/chat.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);
@@ -13,7 +13,7 @@ const checkVideoData = async () => {
 }
    
 const displayVideoData = async () => {
-    let jsonData = await checkVideoData();
+    const jsonData = await checkVideoData();
     const videoTitle = jsonData.video.title;
     document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
     document.getElementById('streamer').innerHTML = jsonData.streamer.name;
@@ -163,7 +163,7 @@ const getVideoTime = async () => {
     setInterval(postComments, 1000, jsonData, video, videoOffset);
 }
 
-document.getElementById('video').src = './files/video.mp4';
+document.getElementById('video').src = '../files/video.mp4';
 displayVideoData();
 getVideoTime();
 
