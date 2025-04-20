@@ -11,33 +11,6 @@ const checkChannelData = async () => {
     return channelData;
 }
 
-function timeSince(date) {
-
-    var seconds = Math.floor((new Date(Date.now()) - date) / 1000);
-    var interval = seconds / 31536000;
-  
-    if (interval > 1) {
-      return Math.floor(interval) + " years";
-    }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-      return Math.floor(interval) + " months";
-    }
-    interval = seconds / 86400;
-    if (interval > 1) {
-      return Math.floor(interval) + " days";
-    }
-    interval = seconds / 3600;
-    if (interval > 1) {
-      return Math.floor(interval) + " hours";
-    }
-    interval = seconds / 60;
-    if (interval > 1) {
-      return Math.floor(interval) + " minutes";
-    }
-    return Math.floor(seconds) + " seconds";
-}
-
 
 // Populate the website with a box for each channel
 const generateChannels = async () => {
@@ -56,3 +29,24 @@ const generateChannels = async () => {
 }
 
 generateChannels();
+
+document.getElementById('modeButton').onclick = function () {
+    const body = document.body;
+    body.classList.toggle('lightMode');
+
+    const modeButton = document.getElementById('modeButton');
+    modeButton.classList.toggle('lightMode');
+    if (body.classList.contains('lightMode')) {
+        modeButton.textContent = 'Dark Mode';
+    } else {
+        modeButton.textContent = 'Light Mode';
+    }
+    
+    const channelContainer = document.getElementById('channelContainer');
+    channelContainer.classList.toggle('lightMode');
+
+    const channels = document.getElementsByClassName('channel');
+    for (let i = 0; i < channels.length; i++) {
+        channels[i].classList.toggle('lightMode');
+    }
+}
