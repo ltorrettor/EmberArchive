@@ -1,4 +1,13 @@
 import argparse
+import re
+
+def validate_bind_format(input: str) -> str:
+    """Given an input this function will validate the input is correctly formatted to be stored as the bind attribute for the cli"""
+    valid_ip = r"\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$"
+    if not re.match(valid_ip, input):
+        raise argparse.ArgumentTypeError(f"Invalid IP address format: {input}")
+    else:
+        return input
 
 
 def create_parser():
@@ -13,7 +22,7 @@ def create_parser():
     parser.add_argument(
         '-b', '--bind', 
         help='binds the web server to the given address which by default is "0.0.0.0"',
-        type=str,
+        type=validate_bind_format,
         default='0.0.0.0'
     )
 

@@ -13,12 +13,11 @@ if __name__ == '__main__':
     arguments = parser.parse_args()
     # parse arguments into variables
     directory = arguments.directory
-    host = arguments.bind
+    ip = arguments.bind
     port = arguments.PORT
     print('Visit http://localhost:8000/index.html for the player demo')
     # dictionary of channels with the key being channel name and the value being a channel object
     channels = scanner.get_file_list(directory)
-    print
     for channel_name in channels:
         print(f"{channel_name}: ")
         channel = channels[channel_name]
