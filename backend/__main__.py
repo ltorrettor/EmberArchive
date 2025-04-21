@@ -23,6 +23,6 @@ if __name__ == '__main__':
         channel = channels[channel_name]
         video_list = channel.get_video_list()
         for video in video_list:
-            print(f"Title: {video.get_title()}\nPath: {video.get_duration()}")
+            print(f"Title: {video.get_title()}\nPath: {video.get_file_path()}\nDuration: {video.get_duration()}")
     app = create_app()
     app.run(host='0.0.0.0', port=8000, debug=False)

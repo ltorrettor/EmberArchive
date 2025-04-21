@@ -1,4 +1,5 @@
 import re
+import subprocess
 from moviepy import VideoFileClip
 from pathlib import Path
 
@@ -27,14 +28,24 @@ class Video:
             self.__title = file_name
         # get the duration of the video in seconds
         # self.__duration = VideoFileClip(file).duration
-        self.__duration = None
+        self.__duration = self.set_duration(file)
     
     # set of getters
     def get_file_path(self):
         return self.__file_path
-
+    
     def get_duration(self):
         return self.__duration
+
+    def set_duration(self, file):
+        #runs ffprobe to get the length of video file in seconds
+        duration = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                             "format=duration", "-of",
+                             "default=noprint_wrappers=1:nokey=1", file],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT)
+        return float(duration.stdout)
+
     
     def get_date(self):
         return self.__date
