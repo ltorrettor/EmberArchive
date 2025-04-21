@@ -3,12 +3,22 @@
     border: 2px solid white;
 }
 
+#videosContainer.lightMode {
+    background-color: white;
+    color: #0e0e10;
+    border: 2px solid #0e0e10;
+}
+
 .video {
     border: 2px solid white;
     width: 300px;
     height: 200px;
     margin: 50px;
     padding: 10px;
+}
+
+.video.lightMode {
+    border: 2px solid #0e0e10;
 }
 
 .channelLogo {

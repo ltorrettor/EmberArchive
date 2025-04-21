@@ -44,3 +44,13 @@ function timeSince(date) {
             text += 's';
         return Math.floor(seconds) + text;
 }
+
+
+document.getElementById('modeButton').onclick = function () {
+    changeMode();
+    if (localStorage.getItem('mode') != 'lightMode') {
+        localStorage.setItem('mode', 'lightMode');
+    } else {
+        localStorage.setItem('mode', 'darkMode');
+    }
+}

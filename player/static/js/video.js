@@ -22,6 +22,7 @@ const displayVideoData = async () => {
     document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
     document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
     document.title = videoTitle + ' - Ember Archive';
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
 }
 
 // Code modified from https://github.com/JZimz/tmi-utils to fit the data received from TwitchDownloader for the next two functions
@@ -142,10 +143,6 @@ const getVideoTime = async () => {
     setInterval(postComments, 1000, jsonData, video, videoOffset);
 }
 
-document.getElementById('video').src = '../files/video.mp4';
-displayVideoData();
-getVideoTime();
-
 // Toggle Fullscreen
 document.getElementById('fullScreenButton').onclick = function () {
     const fullElem = document.fullscreenElement;
@@ -172,7 +169,18 @@ document.getElementById('fullScreenButton').onclick = function () {
     }
 }
 
+
+
 document.getElementById('modeButton').onclick = function () {
+    changeMode();
+    if (localStorage.getItem('mode') != 'lightMode') {
+        localStorage.setItem('mode', 'lightMode');
+    } else {
+        localStorage.setItem('mode', 'darkMode');
+    }
+}
+
+function changeMode() {
     const body = document.body;
     body.classList.toggle('lightMode');
 
@@ -199,11 +207,18 @@ document.getElementById('modeButton').onclick = function () {
     // change all span elements except title
     const spanElements = document.querySelectorAll('span');
     spanElements.forEach(span => {
-        if (!span.id == 'emberTitle') {
+        if (span.id != 'emberTitle') {
             span.classList.toggle('lightMode');
         }
     });
 }
+
+document.getElementById('video').src = '../files/video.mp4';
+displayVideoData();
+getVideoTime();
+
+
+
 
 /*
 document.getElementById('fullvidplay').onclick = function () {

@@ -26,11 +26,13 @@ const generateChannels = async () => {
             channelContainer.className = 'channel';
         document.getElementById('channelContainer').appendChild(channelContainer);
     });
+    // check if user selected light mode and change default
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
 }
 
 generateChannels();
 
-document.getElementById('modeButton').onclick = function () {
+function changeMode() {
     const body = document.body;
     body.classList.toggle('lightMode');
 
