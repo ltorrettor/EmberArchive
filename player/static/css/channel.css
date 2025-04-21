@@ -1,40 +1,12 @@
-html {
-    background-color: #0e0e10;
-}
-
-body {
-    background-color: #0e0e10;
-}
-
-.header {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-top: 20px;
-}
-
-a {
-    display: flex;
-    text-decoration: none;
-    color: black;
-}
-
-h1 {
-    text-align: center;
-    font-size: 60px;
-}
-
-#emberTitle {
-    color: #b6140f;
-}
-
-#archiveTitle {
-    color: #ce5412;
-}
-
 #videosContainer {
     color: white;
     border: 2px solid white;
+}
+
+#videosContainer.lightMode {
+    background-color: white;
+    color: #0e0e10;
+    border: 2px solid #0e0e10;
 }
 
 .video {
@@ -43,6 +15,10 @@ h1 {
     height: 200px;
     margin: 50px;
     padding: 10px;
+}
+
+.video.lightMode {
+    border: 2px solid #0e0e10;
 }
 
 .channelLogo {

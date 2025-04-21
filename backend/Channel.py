@@ -10,3 +10,7 @@ class Channel:
 
     def get_video_list(self):
         return self.__video_list
+    
+    def get_name(self):
+        return self.__name
+    

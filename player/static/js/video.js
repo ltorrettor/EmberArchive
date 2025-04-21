@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/47604112
 const checkVideoData = async () => {
-    let videoData = await fetch(`./files/chat.json`)
+    const videoData = await fetch(`../files/chat.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);
@@ -13,7 +13,7 @@ const checkVideoData = async () => {
 }
    
 const displayVideoData = async () => {
-    let jsonData = await checkVideoData();
+    const jsonData = await checkVideoData();
     const videoTitle = jsonData.video.title;
     document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
     document.getElementById('streamer').innerHTML = jsonData.streamer.name;
@@ -22,34 +22,7 @@ const displayVideoData = async () => {
     document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
     document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
     document.title = videoTitle + ' - Ember Archive';
-}
-
-// https://stackoverflow.com/a/3177838
-function timeSince(date) {
-
-    var seconds = Math.floor((new Date(Date.now()) - date) / 1000);
-    var interval = seconds / 31536000;
-  
-    if (interval > 1) {
-      return Math.floor(interval) + " years";
-    }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-      return Math.floor(interval) + " months";
-    }
-    interval = seconds / 86400;
-    if (interval > 1) {
-      return Math.floor(interval) + " days";
-    }
-    interval = seconds / 3600;
-    if (interval > 1) {
-      return Math.floor(interval) + " hours";
-    }
-    interval = seconds / 60;
-    if (interval > 1) {
-      return Math.floor(interval) + " minutes";
-    }
-    return Math.floor(seconds) + " seconds";
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
 }
 
 // Code modified from https://github.com/JZimz/tmi-utils to fit the data received from TwitchDownloader for the next two functions
@@ -114,16 +87,23 @@ function parseEmotesInMessage (emotes, msg) {
 function postComments(jsonData, video, videoOffset) {
     // Compare time offsets to decide when to post a comment
     const videoTime = videoOffset + Math.floor(video.currentTime);
-
+    const body = document.body;
     for (let i = 0; i < jsonData.comments.length; i++) {
         const commentCreationOffset = jsonData.comments[i].content_offset_seconds;
 
         if (commentCreationOffset <= videoTime) {
             // add a semicolon before the message 
             const parsedMessage = parseEmotesInMessage(jsonData.comments[i].message.emoticons, jsonData.comments[i].message.body);
+            
             const timestamp = document.createElement('span');
             const username = document.createElement('span');
             const message = document.createElement('span');
+            // make them fit the theme
+            if (body.classList.contains('lightMode')) {
+                timestamp.classList.toggle('lightMode');
+                username.classList.toggle('lightMode');
+                message.classList.toggle('lightMode');
+            }
 
             message.append(': ');
             for (let i = 0; i < parsedMessage.length; i++) {
@@ -163,10 +143,6 @@ const getVideoTime = async () => {
     setInterval(postComments, 1000, jsonData, video, videoOffset);
 }
 
-document.getElementById('video').src = './files/video.mp4';
-displayVideoData();
-getVideoTime();
-
 // Toggle Fullscreen
 document.getElementById('fullScreenButton').onclick = function () {
     const fullElem = document.fullscreenElement;
@@ -192,6 +168,57 @@ document.getElementById('fullScreenButton').onclick = function () {
         button.innerHTML = '<svg type="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16" id="screenSizeToggle"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>'
     }
 }
+
+
+
+document.getElementById('modeButton').onclick = function () {
+    changeMode();
+    if (localStorage.getItem('mode') != 'lightMode') {
+        localStorage.setItem('mode', 'lightMode');
+    } else {
+        localStorage.setItem('mode', 'darkMode');
+    }
+}
+
+function changeMode() {
+    const body = document.body;
+    body.classList.toggle('lightMode');
+
+    const modeButton = document.getElementById('modeButton');
+    modeButton.classList.toggle('lightMode');
+    if (body.classList.contains('lightMode')) {
+        modeButton.textContent = 'Dark Mode';
+    } else {
+        modeButton.textContent = 'Light Mode';
+    }
+
+    const streamContainer = document.getElementById('streamContainer');
+    streamContainer.classList.toggle('lightMode');
+
+    const videoContainer = document.getElementById('videoContainer');
+    videoContainer.classList.toggle('lightMode');
+
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.classList.toggle('lightMode');
+
+    const infoContainer = document.getElementById('infoContainer');
+    infoContainer.classList.toggle('lightMode');
+
+    // change all span elements except title
+    const spanElements = document.querySelectorAll('span');
+    spanElements.forEach(span => {
+        if (span.id != 'emberTitle') {
+            span.classList.toggle('lightMode');
+        }
+    });
+}
+
+document.getElementById('video').src = '../files/video.mp4';
+displayVideoData();
+getVideoTime();
+
+
+
 
 /*
 document.getElementById('fullvidplay').onclick = function () {

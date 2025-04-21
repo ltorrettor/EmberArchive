@@ -1,5 +1,5 @@
 const checkChannelData = async () => {
-    let channelData = await fetch(`./files/videos.json`)
+    let channelData = await fetch(`../files/videos.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);
@@ -13,7 +13,7 @@ const checkChannelData = async () => {
 
 
 const checkVideosData = async () => {
-    let channelData = await fetch(`./files/videos.json`)
+    let channelData = await fetch(`../files/videos.json`)
         .then((response) => { 
             return response.json().then((data) => {
                 console.log(data);
@@ -24,34 +24,6 @@ const checkVideosData = async () => {
         });
     return channelData;
 }
-
-function timeSince(date) {
-
-    var seconds = Math.floor((new Date(Date.now()) - date) / 1000);
-    var interval = seconds / 31536000;
-  
-    if (interval > 1) {
-      return Math.floor(interval) + " years";
-    }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-      return Math.floor(interval) + " months";
-    }
-    interval = seconds / 86400;
-    if (interval > 1) {
-      return Math.floor(interval) + " days";
-    }
-    interval = seconds / 3600;
-    if (interval > 1) {
-      return Math.floor(interval) + " hours";
-    }
-    interval = seconds / 60;
-    if (interval > 1) {
-      return Math.floor(interval) + " minutes";
-    }
-    return Math.floor(seconds) + " seconds";
-}
-
 
 const generateChannelInfo = async () => {
     const jsonData = await checkChannelData();
@@ -87,6 +59,38 @@ const generateVideos = async () => {
             });
         }
     });
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
 }
 
 generateVideos();
+
+function changeMode() {
+    const body = document.body;
+    body.classList.toggle('lightMode');
+
+    const modeButton = document.getElementById('modeButton');
+    modeButton.classList.toggle('lightMode');
+    if (body.classList.contains('lightMode')) {
+        modeButton.textContent = 'Dark Mode';
+    } else {
+        modeButton.textContent = 'Light Mode';
+    }
+
+    const videosContainer = document.getElementById('videosContainer');
+    videosContainer.classList.toggle('lightMode');
+
+    const videos = document.getElementsByClassName('video');
+    for (let i = 0; i < videos.length; i++) {
+        videos[i].classList.toggle('lightMode');
+    }
+
+    const titles = document.getElementsByClassName('videoTitle');
+    for (let i = 0; i < titles.length; i++) {
+        titles[i].classList.toggle('lightMode');
+    }
+
+    const lengths = document.getElementsByClassName('videoLength');
+    for (let i = 0; i < lengths.length; i++) {
+        lengths[i].classList.toggle('lightMode');
+    }
+}

@@ -1,36 +1,3 @@
-html {
-    background-color: #0e0e10;
-}
-
-body {
-    background-color: #0e0e10;
-}
-
-.header {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-a {
-    display: flex;
-    text-decoration: none;
-    color: black;
-}
-
-h1 {
-    text-align: center;
-    font-size: 60px;
-}
-
-#emberTitle {
-    color: #b6140f;
-}
-
-#archiveTitle {
-    color: #ce5412;
-}
-
 media-controller {
     --media-icon-color: #b6140f;
     --media-menu-item-hover-color: green;
@@ -41,37 +8,54 @@ media-controller {
     --media-secondary-color: #201d1d;
 }
 
+media-controller.lightMode {
+    --media-control-background: #e7e7e7;
+    --media-control-hover-background: #a1a195;
+}
+
 #streamContainer {
     position: relative;
-    width: 70%;
-    min-width: 800px;
-    min-height: 400px;
-    max-width: 1200px;
-    max-height: 600px;
+    width: 1100px;
+    height: 540px;
     margin: auto;
     background-color: #18181b;
 }
 
+#streamContainer.lightMode {
+    background-color: #e7e7e7;
+}
+
 #videoContainer {
-    width: 74%;
+    width: 71%;
     border: 4px black solid;
+}
+
+#videoContainer.lightMode {
+    border: 4px white solid;
 }
 
 #chatContainer {
     overflow-y: scroll;
-    width: 22%;
+    width: 25%;
     padding: 8px;
     background-color: #18181b;
 }
 
+#chatContainer.lightMode {
+    background-color: #e7e7e7;
+}
+
 #infoContainer {
-    width: 70%;
-    min-width: 800px;
-    max-width: 1200px;
+    width: 1100px;
     margin: auto;
     padding: 0px 20px 20px 20px;
     background-color: #18181b;
     color: white;
+}
+
+#infoContainer.lightMode {
+    background-color: #e7e7e7;
+    color: #18181b;
 }
 
 #fullScreenButton {
@@ -85,4 +69,25 @@ media-controller {
 
 span {
     color: white;
+}
+
+.lightMode {
+    background-color: #e7e7e7;
+    color: #18181b;
+}
+
+#time {
+    font-size: 14px;
+}
+
+#streamer {
+    font-size: 24px;
+}
+
+#videoTitle {
+    font-size: 30px;
+}
+
+#gameTitle {
+    font-size: 20px;
 }

@@ -1,0 +1,47 @@
+body {
+    background-color: #0e0e10;
+}
+
+body.lightMode {
+    background-color: white;
+    color: #0e0e10;
+}
+
+#modeButton {
+    background-color: #0e0e10;
+    color: white;
+    float: right;
+    padding: 10px 15px;
+    border: none;
+}
+
+/* Style for the button in light mode */
+#modeButton.lightMode {
+    background-color: white;
+    color: #0e0e10;
+    border: 1px solid #cccccc;
+}
+
+.header {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+a {
+    display: flex;
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+#emberTitle {
+    color: #b6140f;
+}
+
+#archiveTitle {
+    color: #ce5412;
+}

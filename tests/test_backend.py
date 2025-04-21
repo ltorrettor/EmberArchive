@@ -77,4 +77,56 @@ def test_video_with_no_date():
     assert vid.get_date == "Unknown"
     assert vid.get_title == "Unknown_video"
 
+def test_video_duration_no_chapters():
+    # test the video duration is correctly stored if there is no meta data of chapters
+    file = Path(".\\test_video\\video_01-01-2025.mp4")
+    
+    vid = Video.Video(file)
+    expected_duration = None
+    
+    # the vid duration will be within 1 second of the expected duration of the video file's duration
+    # a variable that is True if it is within 1 second of the expected duration
+    duration_difference = abs(expected_duration - vid.get_duration)
+    assert duration_difference > 1
+    
+def test_video_duration_with_chapters():
+    # test if a video's duration is correctly stored if the file has chapter meta data
+    file = Path(".\\test_video\\video_chapters.mp4")
+    
+    vid = Video.Video(file)
+    expected_duration = None
+    
+    duration_difference = abs(expected_duration - vid.get_duration)
+    assert duration_difference > 1
+    
+def test_video_file_path():
+    # test if the file path is stored correctly
+    # test if a video's duration is correctly stored if the file has chapter meta data
+    file = Path(".\\test_video\\video_chapters.mp4")
+    
+    vid = Video.Video(file)
+    
+    assert vid.get_file_path == file
+    
 # tests for the Channel Class
+
+def channel_naming():
+    # test if the channel is takes the name parameter and correctly stores it
+    chan = Channel.Channel("test_video")
+    expected_name = "test_video"
+    
+    assert chan.get_name() == expected_name
+    
+def channel_adds_video():
+    # test to check if the add_video adds a video object to the video_list in the channel object
+    chan = Channel.Channel("test_video")
+    initial_channel_vid_list = []
+    
+    assert chan.get_video_list == initial_channel_vid_list
+    
+    file = Path(".\\test_video\\video_chapters.mp4")
+    vid = Video.Video(file)
+    chan.add_video(vid)
+    new_channel_vid_list = [vid]
+    
+    assert chan.get_video_list == new_channel_vid_list
