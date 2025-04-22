@@ -52,3 +52,18 @@ function changeMode() {
         channels[i].classList.toggle('lightMode');
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/channels')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('channelContainer');
+        data.channels.forEach(ch => {
+          const el = document.createElement('div');
+          el.textContent = `${ch.name} (${ch.video_count} videos)`;
+          container.appendChild(el);
+        });
+      })
+      .catch(console.error);
+  });

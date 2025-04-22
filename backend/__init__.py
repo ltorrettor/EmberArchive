@@ -1,19 +1,73 @@
 ### This the main program for running the EmberArchive back-end
 
-from flask import Flask, Response, request, abort, send_from_directory
+from flask import Flask, Response, request, abort, send_from_directory, jsonify, render_template
+from .scanner import get_file_list
+import json
 import os
 import sys
 
-#TEMP REGISTRY
-VIDEO_REGISTRY = {
-    "1": "./temp_video/video.mp4"
-}
 
-def create_app():
+def create_app(scan_dir):
     CHUNK_SIZE = 1024 * 1024 # CHUNK_SIZE set to 1mb default, may help to adjust this for performance/memory
     DEBUG_MODE = True
 
-    app = Flask(__name__)
+    # compute absolute paths
+    PROJECT_ROOT   = os.getcwd()
+    TEMPLATES_DIR  = os.path.join(PROJECT_ROOT, 'player', 'templates')
+    STATIC_DIR     = os.path.join(PROJECT_ROOT, 'player', 'static')
+
+    # pass static folder to flask 
+    app = Flask(
+        __name__,
+        template_folder = TEMPLATES_DIR,
+        static_folder = STATIC_DIR,
+        static_url_path = '/static'
+    )
+    
+    @app.route('/', defaults={'path': 'index.html'})
+    @app.route('/<path:path>')
+    
+    def serve(path):
+        return send_from_directory(TEMPLATES_DIR, path)
+     
+        
+    @app.route('/api/channels')
+    def get_channels():
+        """
+        retrieve all channels and their respective video counts.
+
+        Scans the configured directory for channel data, builds a summary for each channel, and returns the result as a JSON payload.
+
+        Returns:
+            flask.wrappers.Response: A JSON response with the structure:
+            {
+                "channels": [
+                    {
+                        "name": <str>,         # the channel’s name
+                        "video_count": <int>   # Numer of videos in  channel
+                    },
+                    ...
+                ]
+            }
+        """
+        # scan the filesystem directory (from the -d flag)
+        channels = get_file_list(scan_dir)
+
+        # build a list of simple dicts from the Channel objects, extracting only the data the front end needs.
+        data = {
+            "channels": [
+                {
+                    "name": ch.get_name(),
+                    "video_count": len(ch.get_video_list())
+                }
+                for ch in channels.values()
+            ]
+        }
+
+        # uses Flask’s jsonify helper to serialize to JSON, set the
+        #    Content-Type header, and return an HTTP 200 response.
+        return jsonify(data)
+
 
     """
     path: file location
@@ -25,7 +79,7 @@ def create_app():
         # open file
         with open(path, 'rb') as video:
             video.seek(start)
-            # Calculate how many bytes to read
+            # Calculate how many bytes to read 
             remaining = end - start + 1
             while remaining > 0:
                 # read a chunk at a time
@@ -43,14 +97,12 @@ def create_app():
 
                 yield chunk
 
-    # Application Target - app will be set to use stream_video() to display /video.mp4
-    # Replace with dynamic variable set in file scan/discovery
-    # from FILESCAN.py import CHOSEN_VIDEO ...or something
+    # Application Target - app will be set to use stream_video()
     @app.route('/video.mp4')
     def stream_video():
 
         # Default testing path ********************
-        video_path = './video.mp4'
+        video_path = '././temp_video/video.mp4'
 
 
         # Its 10 P.M... Do you know where are your files are or who they gave permissions to?..
@@ -131,22 +183,23 @@ def create_app():
         return response
 
     # dynamic error handling prototype WIP
-    """def error_call(error_num):
+    # def error_call(error_num):
 
-        error_messages = {
-            416: "INVALID RANGE HEADER",
-            403: "INSUFFICIENT FILE PERMISSIONS",
-            404: "FILE DOES NOT EXIST",
-            400: "
+    #     error_messages = {
+    #         416: "INVALID RANGE HEADER",
+    #         403: "INSUFFICIENT FILE PERMISSIONS",
+    #         404: "FILE DOES NOT EXIST",
+    #         400: "
 
-        }
-        message = error_messages.get(error_num, f"{error_num}")
-        abort(400, description=message)
-    """
+    #     }
+    #     message = error_messages.get(error_num, f"{error_num}")
+    #     abort(400, description=message)
+    
+    PLAYER_DIR = os.path.join(os.getcwd(), 'player')
+    
+    print("\nRegistered routes:\n", app.url_map, "\n")
 
-    @app.route('/<path:path>')
-    def serve(path):
-        return send_from_directory('../player', path)
-
+    
     return app
+
 
