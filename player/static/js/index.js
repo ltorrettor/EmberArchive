@@ -53,17 +53,43 @@ function changeMode() {
     }
 }
 
-
+/**
+ * Initialize the channel list UI once the HTML document is fully loaded.
+ *
+ * Listens for DOMContentLoaded to ensure all HTML elements are available and then sends an HTTP GET to `/api/channels` to retrieve channel metadata.
+ *
+ * Parses the JSON response into a JavaScript object then iterates over each channel in the response and:
+ *    1. Creates a new <div> element.
+ *    2. Sets its text to "<channel name> (N videos)".
+ *    3. Appends it to the container, rendering it on the page.
+ *
+ * Expected API response shape:
+ * {
+ *   channels: [
+ *     { name: string, video_count: number },
+ *     ...
+ *   ]
+ * }
+ */
 document.addEventListener('DOMContentLoaded', () => {
+    // fetch list of chanels from backend
     fetch('/api/channels')
       .then(res => res.json())
       .then(data => {
+        // get the container for channel items
         const container = document.getElementById('channelContainer');
+        //for each channel in response...
         data.channels.forEach(ch => {
-          const el = document.createElement('div');
-          el.textContent = `${ch.name} (${ch.video_count} videos)`;
-          container.appendChild(el);
+            // create a new div delement for each channel
+          const element = document.createElement('div');
+          // set its textContent to *ChannelName* (*X* video) 
+          element.textContent = `${ch.name} (${ch.video_count} videos)`;
+          //append to container
+          container.appendChild(element);
         });
       })
-      .catch(console.error);
+      //catch error.
+      .catch(err => {
+        console.error('Error fetchiing channels:', err);
+      });
   });
