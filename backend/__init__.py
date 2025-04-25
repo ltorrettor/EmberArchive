@@ -31,9 +31,8 @@ def create_app(scan_dir):
         return send_from_directory(TEMPLATES_DIR, path)
      
         
-    @app.route('/api/channels')
-    def get_channels():
-        """
+    
+    """
         retrieve all channels and their respective video counts.
 
         Scans the configured directory for channel data, builds a summary for each channel, and returns the result as a JSON payload.
@@ -49,7 +48,10 @@ def create_app(scan_dir):
                     ...
                 ]
             }
-        """
+    """
+    @app.route('/api/channels')
+    def send_channels():
+       
         # scan the filesystem directory (from the -d flag)
         channels = get_file_list(scan_dir)
 
@@ -58,16 +60,34 @@ def create_app(scan_dir):
             "channels": [
                 {
                     "name": ch.get_name(),
-                    "video_count": len(ch.get_video_list())
+                    "video_count": len(ch.get_video_list()),
+                    "latest_video": (
+                        ch.get_most_recent().get_date()
+                        if ch.get_most_recent() is not None
+                        else None )
                 }
                 for ch in channels.values()
             ]
         }
 
         # uses Flask’s jsonify helper to serialize to JSON, set the
-        #    Content-Type header, and return an HTTP 200 response.
+        # Content-Type header, and return an HTTP 200 response.
         return jsonify(data)
 
+    @app.route('/api/<channel_name>')
+    def send_videos():
+        channels = get_file_list(scan_dir)
+        
+        data = {
+            "videos": [
+                {
+                    
+                }
+            ]
+        }
+        
+        
+        return jsonify(data)
 
     """
     path: file location

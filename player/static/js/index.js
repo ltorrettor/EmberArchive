@@ -63,7 +63,7 @@ function changeMode() {
  *    2. Sets its text to "<channel name> (N videos)".
  *    3. Appends it to the container, rendering it on the page.
  *
- * Expected API response shape:
+ * Expected API response format:
  * {
  *   channels: [
  *     { name: string, video_count: number },
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // create a new div delement for each channel
           const element = document.createElement('div');
           // set its textContent to *ChannelName* (*X* video) 
-          element.textContent = `${ch.name} (${ch.video_count} videos)`;
+          element.textContent = `${ch.name} (${ch.video_count} videos) — Most recent: ${ch.latest_video}`;
           //append to container
           container.appendChild(element);
         });

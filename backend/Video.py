@@ -1,5 +1,6 @@
 import re
 import subprocess
+from datetime import datetime
 from moviepy import VideoFileClip
 from pathlib import Path
 
@@ -52,3 +53,7 @@ class Video:
     
     def get_title(self):
         return self.__title
+
+    # function to get the date of video in datetime format.
+    def get_datetime(self):
+        return datetime.strptime(self.__date, "%m-%d-%Y")
