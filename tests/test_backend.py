@@ -86,7 +86,7 @@ def test_video_duration_no_chapters():
     
     # the vid duration will be within 1 second of the expected duration of the video file's duration
     # a variable that is True if it is within 1 second of the expected duration
-    duration_difference = abs(expected_duration - vid.get_duration)
+    duration_difference = abs(expected_duration - vid.get_duration())
     assert duration_difference > 1
     
 def test_video_duration_with_chapters():
@@ -96,7 +96,7 @@ def test_video_duration_with_chapters():
     vid = Video.Video(file)
     expected_duration = 330
     
-    duration_difference = abs(expected_duration - vid.get_duration)
+    duration_difference = abs(expected_duration - vid.get_duration())
     assert duration_difference > 1
     
 def test_video_file_path():
