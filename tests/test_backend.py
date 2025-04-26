@@ -79,10 +79,10 @@ def test_video_with_no_date():
 
 def test_video_duration_no_chapters():
     # test the video duration is correctly stored if there is no meta data of chapters
-    file = Path(".\\test_video\\video_01-01-2025.mp4")
+    file = Path(".\\test_video\\Unkown_video.mp4")
     
     vid = Video.Video(file)
-    expected_duration = None
+    expected_duration = 59
     
     # the vid duration will be within 1 second of the expected duration of the video file's duration
     # a variable that is True if it is within 1 second of the expected duration
@@ -91,10 +91,10 @@ def test_video_duration_no_chapters():
     
 def test_video_duration_with_chapters():
     # test if a video's duration is correctly stored if the file has chapter meta data
-    file = Path(".\\test_video\\video_chapters.mp4")
+    file = Path(".\\test_video\\video_01-01-2025.mp4")
     
     vid = Video.Video(file)
-    expected_duration = None
+    expected_duration = 330
     
     duration_difference = abs(expected_duration - vid.get_duration)
     assert duration_difference > 1
@@ -124,7 +124,7 @@ def channel_adds_video():
     
     assert chan.get_video_list == initial_channel_vid_list
     
-    file = Path(".\\test_video\\video_chapters.mp4")
+    file = Path(".\\test_video\\video_01-01-2025.mp4")
     vid = Video.Video(file)
     chan.add_video(vid)
     new_channel_vid_list = [vid]
