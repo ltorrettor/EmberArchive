@@ -9,7 +9,7 @@ class Video:
         # convert the path into a string
         self.__file_path = file
         # strip the file name to the title and the date
-        file_name = file.name.removesuffix(file.suffix)
+        file_name = str(file.name).removesuffix(file.suffix)
         # accepted formats for the date 
         date_format = r"\d{1,2}-\d{1,2}-\d{4}"
         # ===================I would like to be able to get a format for usernames and titles as well but idk how we would seperate them===================
