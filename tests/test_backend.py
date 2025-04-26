@@ -6,15 +6,15 @@ from backend import Video, Channel, cli
 
 def test_given_all_args():
     parser = cli.create_parser()
-    parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
+    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
     # the following are the expected values
     expected_bind = "192.0.2.5"
     expected_port = 8000
     expected_directory = ".\\test_videos"
     
-    assert parser.bind == expected_bind
-    assert parser.PORT == expected_port
-    assert parser.directory == expected_directory
+    assert args.bind == expected_bind
+    assert args.PORT == expected_port
+    assert args.directory == expected_directory
 
 def test_directory_is_required():
     parser = cli.create_parser()
@@ -24,21 +24,21 @@ def test_directory_is_required():
 
 def test_default_bind_and_port():
     parser = cli.create_parser()
-    parser.parse_args(['-d', '.\\test_videos'])
+    args = parser.parse_args(['-d', '.\\test_videos'])
 
     expected_bind = '0.0.0.0'
     expected_port = 80
 
-    assert parser.bind == expected_bind
-    assert parser.PORT == expected_port
+    assert args.bind == expected_bind
+    assert args.PORT == expected_port
 
 def test_attribute_types():
     parser = cli.create_parser()
-    parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
+    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
     
-    assert isinstance(parser.bind, str)
-    assert isinstance(parser.PORT, int)
-    assert isinstance(parser.directory, str)
+    assert isinstance(args.bind, str)
+    assert isinstance(args.PORT, int)
+    assert isinstance(args.directory, str)
     
 
 def test_error_given_wrong_type():
