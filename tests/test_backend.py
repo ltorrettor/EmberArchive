@@ -6,11 +6,11 @@ from backend import Video, Channel, cli
 
 def test_given_all_args():
     parser = cli.create_parser()
-    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
+    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', './test_videos'])
     # the following are the expected values
     expected_bind = "192.0.2.5"
     expected_port = 8000
-    expected_directory = ".\\test_videos"
+    expected_directory = "./test_videos"
     
     assert args.bind == expected_bind
     assert args.PORT == expected_port
@@ -24,7 +24,7 @@ def test_directory_is_required():
 
 def test_default_bind_and_port():
     parser = cli.create_parser()
-    args = parser.parse_args(['-d', '.\\test_videos'])
+    args = parser.parse_args(['-d', './test_videos'])
 
     expected_bind = '0.0.0.0'
     expected_port = 80
@@ -34,7 +34,7 @@ def test_default_bind_and_port():
 
 def test_attribute_types():
     parser = cli.create_parser()
-    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
+    args = parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', './test_videos'])
     
     assert isinstance(args.bind, str)
     assert isinstance(args.PORT, int)
@@ -47,7 +47,7 @@ def test_error_given_wrong_type():
     
     # give the parser a string instead of int port should raise an error
     with pytest.raises(SystemExit):
-        parser.parse_args(['-b', "192.0.2.5", '-P', 'hi', '-d', '.\\test_videos'])
+        parser.parse_args(['-b', "192.0.2.5", '-P', 'hi', '-d', './test_videos'])
 
 def test_bind_incorrect_format():
     # the bind parameter must be the following formatted as n.n.n.n
@@ -55,14 +55,14 @@ def test_bind_incorrect_format():
     
     # incorrect formatted bind is passed therefore there should be an error thrown
     with pytest.raises(SystemExit):
-        parser.parse_args(['-b', "this.is.an.error", '-P', '8000', '-d', '.\\test_videos'])
+        parser.parse_args(['-b', "this.is.an.error", '-P', '8000', '-d', './test_videos'])
     
 
 # tests for the Video Class
 
 # test a video file with the date in the file name will parse the correct date and store the correct title and date
 def test_video_with_date():
-    file = Path(".\\test_video\\video_01-01-2025.mp4")
+    file = Path("./test_video/video_01-01-2025.mp4")
     
     vid = Video.Video(file)
     
@@ -70,7 +70,7 @@ def test_video_with_date():
     assert vid.get_title() == "video_"
     
 def test_video_with_no_date():
-    file = Path(".\\test_video\\Unknown_video.mp4")
+    file = Path("./test_video/Unknown_video.mp4")
     
     vid = Video.Video(file)
     
@@ -79,7 +79,7 @@ def test_video_with_no_date():
 
 def test_video_duration_no_chapters():
     # test the video duration is correctly stored if there is no meta data of chapters
-    file = Path(".\\test_video\\Unkown_video.mp4")
+    file = Path("./test_video/Unkown_video.mp4")
     
     vid = Video.Video(file)
     expected_duration = 59
@@ -91,7 +91,7 @@ def test_video_duration_no_chapters():
     
 def test_video_duration_with_chapters():
     # test if a video's duration is correctly stored if the file has chapter meta data
-    file = Path(".\\test_video\\video_01-01-2025.mp4")
+    file = Path("./test_video/video_01-01-2025.mp4")
     
     vid = Video.Video(file)
     expected_duration = 330
@@ -102,7 +102,7 @@ def test_video_duration_with_chapters():
 def test_video_file_path():
     # test if the file path is stored correctly
     # test if a video's duration is correctly stored if the file has chapter meta data
-    file = Path(".\\test_video\\video_chapters.mp4")
+    file = Path("./test_video/video_01-01-2025.mp4")
     
     vid = Video.Video(file)
     
@@ -124,7 +124,7 @@ def channel_adds_video():
     
     assert chan.get_video_list() == initial_channel_vid_list
     
-    file = Path(".\\test_video\\video_01-01-2025.mp4")
+    file = Path("./test_video/video_01-01-2025.mp4")
     vid = Video.Video(file)
     chan.add_video(vid)
     new_channel_vid_list = [vid]
