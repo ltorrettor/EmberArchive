@@ -6,7 +6,7 @@ from backend import Video, Channel, cli
 
 def test_given_all_args():
     parser = cli.create_parser()
-    parser.parse_args(['-b', "192.0.2.5", '-P', 8000, '-d', '.\\test_videos'])
+    parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
     # the following are the expected values
     expected_bind = "192.0.2.5"
     expected_port = 8000
@@ -34,7 +34,7 @@ def test_default_bind_and_port():
 
 def test_attribute_types():
     parser = cli.create_parser()
-    parser.parse_args(['-b', "192.0.2.5", '-P', 8000, '-d', '.\\test_videos'])
+    parser.parse_args(['-b', "192.0.2.5", '-P', '8000', '-d', '.\\test_videos'])
     
     assert isinstance(parser.bind, str)
     assert isinstance(parser.PORT, int)
@@ -55,7 +55,7 @@ def test_bind_incorrect_format():
     
     # incorrect formatted bind is passed therefore there should be an error thrown
     with pytest.raises(SystemExit):
-        parser.parse_args(['-b', "this.is.an.error", '-P', 8000, '-d', '.\\test_videos'])
+        parser.parse_args(['-b', "this.is.an.error", '-P', '8000', '-d', '.\\test_videos'])
     
 
 # tests for the Video Class
