@@ -66,16 +66,16 @@ def test_video_with_date():
     
     vid = Video.Video(file)
     
-    assert vid.get_date == "01-01-2025"
-    assert vid.get_title == "video_"
+    assert vid.get_date() == "01-01-2025"
+    assert vid.get_title() == "video_"
     
 def test_video_with_no_date():
     file = Path(".\\test_video\\Unknown_video.mp4")
     
     vid = Video.Video(file)
     
-    assert vid.get_date == "Unknown"
-    assert vid.get_title == "Unknown_video"
+    assert vid.get_date() == "Unknown"
+    assert vid.get_title() == "Unknown_video"
 
 def test_video_duration_no_chapters():
     # test the video duration is correctly stored if there is no meta data of chapters
@@ -106,7 +106,7 @@ def test_video_file_path():
     
     vid = Video.Video(file)
     
-    assert vid.get_file_path == file
+    assert vid.get_file_path() == file
     
 # tests for the Channel Class
 
@@ -122,11 +122,11 @@ def channel_adds_video():
     chan = Channel.Channel("test_video")
     initial_channel_vid_list = []
     
-    assert chan.get_video_list == initial_channel_vid_list
+    assert chan.get_video_list() == initial_channel_vid_list
     
     file = Path(".\\test_video\\video_01-01-2025.mp4")
     vid = Video.Video(file)
     chan.add_video(vid)
     new_channel_vid_list = [vid]
     
-    assert chan.get_video_list == new_channel_vid_list
+    assert chan.get_video_list() == new_channel_vid_list
