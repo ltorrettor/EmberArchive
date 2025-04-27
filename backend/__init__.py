@@ -97,6 +97,10 @@ def create_app(scan_dir):
         
         
         return jsonify(data)
+    
+    @app.route('/channel/<channel_name>')
+    def show_channel_page(channel_name):
+        return render_template('channel.html', channel_name=channel_name)
 
     """
     path: file location

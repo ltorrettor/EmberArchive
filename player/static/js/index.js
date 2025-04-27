@@ -40,31 +40,32 @@ function changeMode() {
 document.addEventListener('DOMContentLoaded', () => {
     // fetch list of chanels from backend
     fetch('/api/channels')
-      .then(res => res.json())
-      .then(data => {
-        //for each channel in response...
-        data.channels.forEach(ch => {
-            const channelContainer = document.createElement('div');
-            const name = ch.name;
-            const trimmedName = name.replace(/[^a-zA-Z0-9]/g, "");
-            channelContainer.innerHTML = '<a href="api/channel/' + trimmedName + '">'
-                + '<img src="" class="channelLogo">'
-                + '<div class="channelInfoContainer">'
-                + '<div class="channelTitle">' + name + '</div><br>'
-                + '<span class="videoCount">' + ch.video_count + ' videos </span>'
-                + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span>'
-                + '</div></a><br><br>';
-                channelContainer.className = 'channel';
-            document.getElementById('channelContainer').appendChild(channelContainer);
-            // check if user selected light mode and change default
-        });
-        if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
-      })
-      //catch error.
-      .catch(err => {
+        .then(res => res.json())
+        .then(data => {
+            //for each channel in response...
+            data.channels.forEach(ch => {
+                const channelContainer = document.createElement('div');
+                const name = ch.name;
+                // potentially to avoid naming issues
+                const trimmedName = name.replace(/[^a-zA-Z0-9]/g, "");
+                channelContainer.innerHTML = '<a href="channel/' + name + '">'
+                    + '<img src="" class="channelLogo">'
+                    + '<div class="channelInfoContainer">'
+                    + '<div class="channelTitle">' + name + '</div><br>'
+                    + '<span class="videoCount">' + ch.video_count + ' videos </span>'
+                    + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span>'
+                    + '</div></a><br><br>';
+                    channelContainer.className = 'channel';
+                document.getElementById('channelContainer').appendChild(channelContainer);
+                // check if user selected light mode and change default
+            });
+            if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+        })
+    //catch error.
+    .catch(err => {
         console.error('Error fetching channels:', err);
-      });
-  });
+    });
+});
 
 
 /*

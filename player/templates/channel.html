@@ -8,15 +8,15 @@
         <link href="../static/css/channel.css" rel="stylesheet">
         <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@4/+esm"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@4/menu/+esm"></script>
-        <link href="../files/ember-logo.png" rel="icon" type="image/png">
-        <title>Ember Archive</title>
+        <link href="/static/images/ember-logo.png" rel="icon" type="image/png">
+        <title>{{ channel_name }} - Ember Archive</title>
     </head>
 
     <body>
         <button type="button" id="modeButton">Light Mode</button>
         <div class="header">
             <a href="index.html">
-                <img src="../files/ember-logo.png" style="width:60px; padding: 10px;">
+                <img src="/static/images/ember-logo.png" style="width:60px; padding: 10px;">
                 <h1 style="display: flex"><span id="emberTitle">Ember</span> <span id="archiveTitle">Archive</span></h1>
             </a>
         </div>
@@ -25,5 +25,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../static/js/ember.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // fetch list of channels from backend
+            fetch('/api/{{ channel_name }} ')
+                .then(res => res.json())
+                .then(data => {
+                //for each video in response...
+                data.videos.forEach(video => {
+                    const videoElement = document.createElement('div');
+                    videoElement.innerHTML = '<img src="" class="videoThumbnail">'
+                        + '<div class="videoInfoContainer">'
+                        + '<div class="videoTitle">' + video.title + '</div><br>'
+                        + '<span class="videoLength"> ' + video.duration + '</span></div>'
+                        + '<span class="videoDate"> recorded ' + timeSince(new Date(video.date)) + ' ago</span>'
+                        + '<br><br>';
+                        videoElement.className = 'video p-2';
+                    document.getElementById('videosContainer').appendChild(videoElement);
+                });
+                if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+            })
+            //catch error.
+            .catch(err => {
+            console.error('Error fetching video data:', err);
+            });
+        });
+    </script>
     <script src="../static/js/channel.js"></script>
 </html>

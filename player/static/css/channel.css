@@ -43,3 +43,9 @@
     width: 200px;
     font-size: 20px;
 }
+
+.videoDate {
+    display: inline-block;
+    width: 300px;
+    font-size: 20px;
+}
