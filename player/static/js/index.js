@@ -42,8 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/channels')
       .then(res => res.json())
       .then(data => {
-        // get the container for channel items
-        const container = document.getElementById('channelContainer');
         //for each channel in response...
         data.channels.forEach(ch => {
             const channelContainer = document.createElement('div');
@@ -56,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 channelContainer.className = 'channel';
             document.getElementById('channelContainer').appendChild(channelContainer);
             // check if user selected light mode and change default
-            if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
         });
+        if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
       })
       //catch error.
       .catch(err => {
