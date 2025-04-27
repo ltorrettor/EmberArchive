@@ -89,7 +89,7 @@ def create_app(scan_dir):
                     "title": video.get_title(),
                     "date": video.get_date(),
                     "duration": video.get_duration(),
-                    "filepath": video.get_file_path(),
+                    "filepath": str(video.get_file_path()), # Have to pass as string. path type is "non-jsonable" 
                 }
                 for video in ch.get_video_list()
             ]
