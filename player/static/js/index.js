@@ -45,12 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
         //for each channel in response...
         data.channels.forEach(ch => {
             const channelContainer = document.createElement('div');
-            channelContainer.innerHTML = '<img src="" class="channelLogo">'
+            const name = ch.name;
+            const trimmedName = name.replace(/[^a-zA-Z0-9]/g, "");
+            channelContainer.innerHTML = '<a href="api/channel/' + trimmedName + '">'
+                + '<img src="" class="channelLogo">'
                 + '<div class="channelInfoContainer">'
-                + '<div class="channelTitle">' + ch.name + '</div><br>'
+                + '<div class="channelTitle">' + name + '</div><br>'
                 + '<span class="videoCount">' + ch.video_count + ' videos </span>'
-                + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span></div>'
-                + '<br><br>';
+                + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span>'
+                + '</div></a><br><br>';
                 channelContainer.className = 'channel';
             document.getElementById('channelContainer').appendChild(channelContainer);
             // check if user selected light mode and change default

@@ -94,3 +94,50 @@ function changeMode() {
         lengths[i].classList.toggle('lightMode');
     }
 }
+
+/**
+ * Initialize the channel list UI once the HTML document is fully loaded.
+ *
+ * Listens for DOMContentLoaded to ensure all HTML elements are available and then sends an HTTP GET to `/api/channels` to retrieve channel metadata.
+ *
+ * Parses the JSON response into a JavaScript object then iterates over each channel in the response and:
+ *    1. Creates a new <div> element.
+ *    2. Sets its text to "<channel name> (N videos)".
+ *    3. Appends it to the container, rendering it on the page.
+ *
+ * Expected API response format:
+ * {
+ *   channels: [
+ *     { name: string, video_count: number },
+ *     ...
+ *   ]
+ * }
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // fetch list of channels from backend
+    fetch('/api/channel/{{ channel_name }} ')
+      .then(res => res.json())
+      .then(data => {
+        //for each channel in response...
+        data.channels.forEach(ch => {
+            const channelContainer = document.createElement('div');
+            const name = ch.name;
+            const trimmedName = name.replace(/[^a-zA-Z0-9]/g, "");
+            channelContainer.innerHTML = '<a href="api/channel/' + trimmedName + '">'
+                + '<img src="" class="channelLogo">'
+                + '<div class="channelInfoContainer">'
+                + '<div class="channelTitle">' + name + '</div><br>'
+                + '<span class="videoCount">' + ch.video_count + ' videos </span>'
+                + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span>'
+                + '</div></a><br><br>';
+                channelContainer.className = 'channel';
+            document.getElementById('channelContainer').appendChild(channelContainer);
+            // check if user selected light mode and change default
+        });
+        if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+      })
+      //catch error.
+      .catch(err => {
+        console.error('Error fetching channels:', err);
+      });
+  });
