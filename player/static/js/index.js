@@ -1,37 +1,3 @@
-const checkChannelData = async () => {
-    let channelData = await fetch(`../files/channels.json`)
-        .then((response) => { 
-            return response.json().then((data) => {
-                console.log(data);
-                return data;
-            }).catch((err) => {
-                console.log(err);
-            }) 
-        });
-    return channelData;
-}
-
-
-// Populate the website with a box for each channel
-const generateChannels = async () => {
-    const jsonData = await checkChannelData();
-    jsonData.channels.forEach (channel=> {
-        const channelContainer = document.createElement('div');
-        channelContainer.innerHTML = '<img src="" class="channelLogo">'
-            + '<div class="channelInfoContainer">'
-            + '<div class="channelTitle">' + channel.name + '</div><br>'
-            + '<span class="videoCount">' + channel.video_count + ' videos </span>'
-            + '<span class="lastVideo"> latest video ' + timeSince(new Date(channel.latest_video.slice(0, 10))) + ' ago</span></div>'
-            + '<br><br>';
-            channelContainer.className = 'channel';
-        document.getElementById('channelContainer').appendChild(channelContainer);
-    });
-    // check if user selected light mode and change default
-    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
-}
-
-generateChannels();
-
 function changeMode() {
     const body = document.body;
     body.classList.toggle('lightMode');
@@ -80,12 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('channelContainer');
         //for each channel in response...
         data.channels.forEach(ch => {
-            // create a new div delement for each channel
-          const element = document.createElement('div');
-          // set its textContent to *ChannelName* (*X* video) 
-          element.textContent = `${ch.name} (${ch.video_count} videos) — Most recent: ${ch.latest_video}`;
-          //append to container
-          container.appendChild(element);
+            const channelContainer = document.createElement('div');
+            channelContainer.innerHTML = '<img src="" class="channelLogo">'
+                + '<div class="channelInfoContainer">'
+                + '<div class="channelTitle">' + ch.name + '</div><br>'
+                + '<span class="videoCount">' + ch.video_count + ' videos </span>'
+                + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span></div>'
+                + '<br><br>';
+                channelContainer.className = 'channel';
+            document.getElementById('channelContainer').appendChild(channelContainer);
+            // check if user selected light mode and change default
+            if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
         });
       })
       //catch error.
@@ -93,3 +64,38 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error fetchiing channels:', err);
       });
   });
+
+
+/*
+obsolete
+const checkChannelData = async () => {
+    let channelData = await fetch(`../files/channels.json`)
+        .then((response) => { 
+            return response.json().then((data) => {
+                console.log(data);
+                return data;
+            }).catch((err) => {
+                console.log(err);
+            }) 
+        });
+    return channelData;
+}
+
+// Populate the website with a box for each channel
+const generateChannels = async () => {
+    const jsonData = await checkChannelData();
+    jsonData.channels.forEach (channel=> {
+        const channelContainer = document.createElement('div');
+        channelContainer.innerHTML = '<img src="" class="channelLogo">'
+            + '<div class="channelInfoContainer">'
+            + '<div class="channelTitle">' + channel.name + '</div><br>'
+            + '<span class="videoCount">' + channel.video_count + ' videos </span>'
+            + '<span class="lastVideo"> latest video ' + timeSince(new Date(channel.latest_video.slice(0, 10))) + ' ago</span></div>'
+            + '<br><br>';
+            channelContainer.className = 'channel';
+        document.getElementById('channelContainer').appendChild(channelContainer);
+    });
+    // check if user selected light mode and change default
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+}
+*/
