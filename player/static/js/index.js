@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       //catch error.
       .catch(err => {
-        console.error('Error fetchiing channels:', err);
+        console.error('Error fetching channels:', err);
       });
   });
 
