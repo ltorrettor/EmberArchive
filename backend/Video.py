@@ -1,7 +1,6 @@
 import re
 import subprocess
 from datetime import datetime
-from moviepy import VideoFileClip
 from pathlib import Path
 
 class Video:
