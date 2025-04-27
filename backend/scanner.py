@@ -28,7 +28,7 @@ VIDEO_EXTENSIONS = {".mp4", ".mov", ".webm", ".mkv", ".avi", ".wmv", ".flv"}
     ]
 }
 """
-def get_file_list(directory, output_filename = "video_list.json" ):
+def get_file_list(directory):
     path = Path(directory)
     # empty dictionary which will contain the channel_names and channel class
     channels = {}

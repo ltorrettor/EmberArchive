@@ -75,14 +75,23 @@ def create_app(scan_dir):
         return jsonify(data)
 
     @app.route('/api/<channel_name>')
-    def send_videos():
+    def send_videos(channel_name):
         channels = get_file_list(scan_dir)
         
+        ch = channels.get(channel_name)
+
+        if ch is None:
+            return jsonify({"error": "Channel not found"}), 404
+
         data = {
             "videos": [
                 {
-                    
+                    "title": video.get_title(),
+                    "date": video.get_date(),
+                    "duration": video.get_duration(),
+                    "filepath": video.get_file_path(),
                 }
+                for video in ch.get_video_list()
             ]
         }
         
