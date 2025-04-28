@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     + '<div class="channelTitle">' + name + '</div><br>'
                     + '<span class="videoCount">' + ch.video_count + ' videos </span>'
                     + '<span class="lastVideo">' + date + '</span>'
-                    + '</div></a><br><br>';
+                    + '</div></a>';
                     channelContainer.className = 'channel';
                 document.getElementById('channelContainer').appendChild(channelContainer);
                 // check if user selected light mode and change default
