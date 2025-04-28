@@ -95,15 +95,15 @@ def create_app(scan_dir):
                 chat_log = None
         
             
-        video_data.append(
-            {
-                "title": video.get_title(),
-                "date": video.get_date(),
-                "duration": video.get_duration(),
-                "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
-                "chatlog": chat_log, #
-            }     
-        )
+            video_data.append(
+                {
+                    "title": video.get_title(),
+                    "date": video.get_date(),
+                    "duration": video.get_duration(),
+                    "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
+                    "chatlog": chat_log, #
+                }     
+            )
         
         
         return jsonify({
