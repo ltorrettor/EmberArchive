@@ -36,11 +36,11 @@
                 //for each video in response...
                 data.videos.forEach(video => {
                     const title = video.title;
-                    const trimmedTitle = title.replace(/[^a-zA-Z0-9]/g, "");
+                    // const trimmedTitle = title.replace(/[^a-zA-Z0-9]/g, "");
                     const duration = new Date(video.duration * 1000).toISOString().slice(11, 19);
                     const date = video.date === 'Unknown' ? '' : video.date;
                     const videoElement = document.createElement('div');
-                    videoElement.innerHTML = '<a href="{{ channel_name }}/' + trimmedTitle + '">'
+                    videoElement.innerHTML = '<a href="{{ channel_name }}/' + title + '">'
                     //    + '<img src="" class="videoThumbnail">'
                         + '<div class="videoInfoContainer">'
                         + '<div class="videoTitle">' + title + '</div>'
