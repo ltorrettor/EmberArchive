@@ -1,5 +1,7 @@
 #channelContainer {
     color: white;
+    width: 70%;
+    min-width: 500px;
 }
 
 #channelContainer.lightMode {
@@ -7,14 +9,21 @@
 }
 
 .channel {
-    display: flex;
     border: 2px solid white;
-    margin: 50px;
-    padding: 10px;
+    margin: 30px;
+    width: 90%;
+}
+
+.channel:hover {
+    background-color: #1f2222;
 }
 
 .channel.lightMode {
     border: 2px solid #0e0e10;
+}
+
+.channel.lightMode:hover {
+    background-color: #e8eaec;
 }
 
 .channelLogo {
@@ -25,21 +34,24 @@
 }
 
 .channelInfoContainer {
-    margin-left: 20px;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
 }
 
 .channelTitle {
     display: block;
-    font-size: 40px;
+    width: 100%;
+    font-size: 36px;
+    overflow: hidden;
 }
 
 .videoCount {
-    display: inline-block;
     font-size: 24px;
-    width: 200px;
+    width: 150px;
 }
 
 .lastVideo {
     font-size: 24px;
-    margin-left: 20px;
+    float: right;
 }

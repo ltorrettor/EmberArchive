@@ -43,7 +43,7 @@ def create_app(scan_dir):
                 "channels": [
                     {
                         "name": <str>,         # the channel’s name
-                        "video_count": <int>   # Numer of videos in  channel
+                        "video_count": <int>   # Number of videos in  channel
                     },
                     ...
                 ]

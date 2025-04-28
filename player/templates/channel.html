@@ -15,7 +15,7 @@
     <body>
         <button type="button" id="modeButton">Light Mode</button>
         <div class="header">
-            <a href="index.html">
+            <a href="/">
                 <img src="/static/images/ember-logo.png" style="width:60px; padding: 10px;">
                 <h1 style="display: flex"><span id="emberTitle">Ember</span> <span id="archiveTitle">Archive</span></h1>
             </a>
@@ -27,24 +27,33 @@
     <script src="../static/js/ember.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
             // fetch list of channels from backend
             fetch('/api/{{ channel_name }} ')
                 .then(res => res.json())
                 .then(data => {
+
                 //for each video in response...
                 data.videos.forEach(video => {
+                    const title = video.title;
+                    const trimmedTitle = title.replace(/[^a-zA-Z0-9]/g, "");
+                    const duration = new Date(video.duration * 1000).toISOString().slice(11, 19);
+                    const date = video.date === 'Unknown' ? '' : video.date;
                     const videoElement = document.createElement('div');
-                    videoElement.innerHTML = '<img src="" class="videoThumbnail">'
+                    videoElement.innerHTML = '<a href="{{ channel_name }}/' + trimmedTitle + '">'
+                    //    + '<img src="" class="videoThumbnail">'
                         + '<div class="videoInfoContainer">'
-                        + '<div class="videoTitle">' + video.title + '</div><br>'
-                        + '<span class="videoLength"> ' + video.duration + '</span></div>'
-                        + '<span class="videoDate"> recorded ' + timeSince(new Date(video.date)) + ' ago</span>'
-                        + '<br><br>';
+                        + '<div class="videoTitle">' + title + '</div>'
+                        + '<span class="videoDate">' + date + '</span>'
+                        + '<span class="videoLength"> ' + duration + '</span>'
+                        + '</div></a>';
                         videoElement.className = 'video p-2';
                     document.getElementById('videosContainer').appendChild(videoElement);
                 });
+
                 if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
             })
+
             //catch error.
             .catch(err => {
             console.error('Error fetching video data:', err);

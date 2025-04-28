@@ -46,14 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
             data.channels.forEach(ch => {
                 const channelContainer = document.createElement('div');
                 const name = ch.name;
+                const date = ch.latest_video === 'Unknown' ? '' : 'last video: ' + ch.latest_video;
                 // potentially to avoid naming issues
                 const trimmedName = name.replace(/[^a-zA-Z0-9]/g, "");
                 channelContainer.innerHTML = '<a href="channel/' + name + '">'
-                    + '<img src="" class="channelLogo">'
+                    // + '<img src="" class="channelLogo">'
                     + '<div class="channelInfoContainer">'
                     + '<div class="channelTitle">' + name + '</div><br>'
                     + '<span class="videoCount">' + ch.video_count + ' videos </span>'
-                    + '<span class="lastVideo"> latest video ' + timeSince(new Date(ch.latest_video)) + ' ago</span>'
+                    + '<span class="lastVideo">' + date + '</span>'
                     + '</div></a><br><br>';
                     channelContainer.className = 'channel';
                 document.getElementById('channelContainer').appendChild(channelContainer);
