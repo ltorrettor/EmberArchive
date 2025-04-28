@@ -27,7 +27,7 @@ def test_include_bootstrap(client):
     assert b"bootstrap.bundle.min.js" in response.data
 
 def test_serve_logo(client):
-    response = client.get("/files/ember-logo.png")
+    response = client.get("/static/images/ember-logo.png")
     assert response.status_code == 200
 
 def test_serve_chat(client):

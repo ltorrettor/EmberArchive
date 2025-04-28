@@ -7,7 +7,7 @@ import os
 import sys
 
 
-def create_app(scan_dir):
+def create_app(scan_dir=None):
     CHUNK_SIZE = 1024 * 1024 # CHUNK_SIZE set to 1mb default, may help to adjust this for performance/memory
     DEBUG_MODE = True
 
@@ -16,6 +16,10 @@ def create_app(scan_dir):
     TEMPLATES_DIR  = os.path.join(PROJECT_ROOT, 'player', 'templates')
     STATIC_DIR     = os.path.join(PROJECT_ROOT, 'player', 'static')
 
+    # default path will be PROJECT_ROOT/temp_video for testing
+    if scan_dir is None:
+        scan_dir = os.path.join(PROJECT_ROOT, 'temp_video')
+        
     # pass static folder to flask 
     app = Flask(
         __name__,
@@ -24,11 +28,30 @@ def create_app(scan_dir):
         static_url_path = '/static'
     )
     
+    # serve index.html to frontend for testing
+    @app.route('/index.html')
+    def serve_index():
+        return send_from_directory(TEMPLATES_DIR, 'index.html')
+    
+    # serve files to frontend for testing
     @app.route('/', defaults={'path': 'index.html'})
     @app.route('/<path:path>')
-    
     def serve(path):
         return send_from_directory(TEMPLATES_DIR, path)
+
+    #define filepath for "files"
+    FILES_DIR = os.path.join(PROJECT_ROOT, 'player', 'files')
+    # serve requested files to frontend 
+    @app.route('/files/<path:filename>')
+    def serve_files(filename):
+        return send_from_directory(FILES_DIR, filename)
+
+    # define filepath for "js" files
+    JS_DIR = os.path.join(STATIC_DIR, 'js')
+    # serve requested js files to frontend
+    @app.route('/js/<path:filename>')
+    def serve_js(filename):
+        return send_from_directory(JS_DIR, filename)
      
         
     
@@ -101,8 +124,8 @@ def create_app(scan_dir):
                     "date": video.get_date(),
                     "duration": video.get_duration(),
                     "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
-                    "chatlog": chat_log, #
-                }     
+                    "chatlog": chat_log, #passes entire json file
+                }    
             )
         
         
@@ -114,49 +137,6 @@ def create_app(scan_dir):
     @app.route('/channel/<channel_name>')
     def show_channel_page(channel_name):
         return render_template('channel.html', channel_name=channel_name)
-    
-    @app.route('/api/channel/<channel_name>/<video_name>')
-    def send_videos_and_chat(channel_name, video_name):
-        channels = get_file_list(scan_dir)
-        
-        ch = channels.get(channel_name)
-
-        if ch is None:
-            return jsonify({"error": "Channel not found"}), 404
-            
-        video_data = []
-        for video in ch.get_video_list():
-            if video.get_title() == video_name:
-                video_path = Path(video.get_file_path())
-                # look for a chat JSON next to the video file
-                chat_file = video_path.with_suffix('.json')
-                if chat_file.exists():
-                    with open(chat_file, 'r') as cf:
-                        chat_log = json.load(cf)
-                else:
-                    chat_log = None
-        
-            
-                video_data.append(
-                    {
-                        "title": video.get_title(),
-                        "date": video.get_date(),
-                        "duration": video.get_duration(),
-                        "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
-                        "chatlog": chat_log, #
-                    }     
-                )
-
-        
-        
-        return jsonify({
-            "channel": channel_name,
-            "videos":  video_data
-        })
-    
-    @app.route('/channel/<channel_name>/<video_name>')
-    def show_video_page(channel_name, video_name):
-        return render_template('video.html', channel_name=channel_name, video_name=video_name)
 
     """
     path: file location
@@ -187,24 +167,11 @@ def create_app(scan_dir):
                 yield chunk
 
     # Application Target - app will be set to use stream_video()
-    @app.route('/stream/channel/<channel_name>/<video_filename>')
-    def stream_video(channel_name, video_filename):
-        channels = get_file_list(scan_dir)
-        ch = channels.get(channel_name)
-        if ch is None:
-            abort(404)
+    @app.route('/video.mp4')
+    def stream_video():
 
-        video_path_obj = None
-        for video in ch.get_video_list():
-            if Path(video.get_file_path()).name == video_filename:
-                video_path_obj = Path(video.get_file_path())
-                break
-
-        if not video_path_obj or not video_path_obj.exists():
-            abort(404)
-
-        video_path = str(video_path_obj)
-
+        # Default testing path ********************
+        video_path = '././temp_video/video.mp4'
 
 
         # Its 10 P.M... Do you know where are your files are or who they gave permissions to?..
@@ -305,10 +272,3 @@ def create_app(scan_dir):
     return app
 
 
-    '''
-    @app.route('/video.mp4')
-    def stream_video():
-
-        # Default testing path ********************
-        video_path = '././temp_video/video.mp4'
-    '''
