@@ -1,5 +1,5 @@
 ### This the main program for running the EmberArchive back-end
-
+from pathlib import Path
 from flask import Flask, Response, request, abort, send_from_directory, jsonify, render_template
 from .scanner import get_file_list
 import json
@@ -82,21 +82,34 @@ def create_app(scan_dir):
 
         if ch is None:
             return jsonify({"error": "Channel not found"}), 404
-
-        data = {
-            "videos": [
-                {
-                    "title": video.get_title(),
-                    "date": video.get_date(),
-                    "duration": video.get_duration(),
-                    "filepath": str(video.get_file_path()), # Have to pass as string. path type is "non-jsonable" 
-                }
-                for video in ch.get_video_list()
-            ]
-        }
+            
+        video_data = []
+        for video in ch.get_video_list():
+            video_path = Path(video.get_file_path())
+            # look for a chat JSON next to the video file
+            chat_file = video_path.with_suffix('.json')
+            if chat_file.exists():
+                with open(chat_file, 'r') as cf:
+                    chat_log = json.load(cf)
+            else:
+                chat_log = None
+        
+            
+        video_data.append(
+            {
+                "title": video.get_title(),
+                "date": video.get_date(),
+                "duration": video.get_duration(),
+                "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
+                "chatlog": chat_log, #
+            }     
+        )
         
         
-        return jsonify(data)
+        return jsonify({
+            "channel": channel_name,
+            "videos":  video_data
+        })
     
     @app.route('/channel/<channel_name>')
     def show_channel_page(channel_name):
