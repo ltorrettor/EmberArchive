@@ -4,12 +4,12 @@
         <meta charset="UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link href="../static/css/ember.css" rel="stylesheet">
-        <link href="../static/css/video.css" rel="stylesheet">
+        <link href="/static/css/ember.css" rel="stylesheet">
+        <link href="/static/css/video.css" rel="stylesheet">
         <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@4/+esm"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/media-chrome@4/menu/+esm"></script>
         <link href="/static/images/ember-logo.png" rel="icon" type="image/png">
-        <title>Ember Archive</title>
+        <title>{{ video_name }} - Ember Archive</title>
     </head>
 
     <body>
@@ -66,6 +66,79 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../static/js/ember.js"></script>
-    <script src="../static/js/video.js"></script>
+    <script src="/static/js/ember.js"></script>
+    <script src="/static/js/video.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const videoPlayer = document.getElementById('video');
+            const chatContainer = document.getElementById('chatContainer');
+
+            const fetchVideoData = async () => {
+                try {
+                    const response = await fetch('/api/channel/{{ channel_name }}/{{ video_name }}');
+                    if (!response.ok) {
+                        console.error('Error fetching video data:', response.status);
+                        const errorText = await response.text();
+                        console.error('Error response:', errorText); // Log the actual error response
+                        return null;
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                    console.log(data.videos);
+                    console.log(data.videos[0].date)
+                    console.log(data.videos[0].chatlog);
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching video data:', error);
+                    return null;
+                }
+            };
+            /*
+            const displayVideoData = (data) => {
+                if (data) {
+                    const videoData = data.videos[0];
+                    const chatlog = videoData.chatlog;
+                    document.getElementById('time').innerHTML = videoData.date === 'Unknown' ? '' : timeSince(new Date(data.date.slice(0, 10))) + ' ago';
+                    document.getElementById('videoTitle').innerHTML = data.title;
+                    videoPlayer.src = fetch('/stream/channel/${channelName}/${videoFilename}' + '.mp4');
+
+                    if (data.chatlog && data.chatlog.comments) {
+                        const videoOffset = data.chatlog.video.start || 0;
+                        chatContainer.innerHTML = '';
+                        setInterval(postComments, 1000, chatlog, videoPlayer, videoOffset);
+                    }
+
+                    if (localStorage.getItem('mode') == 'lightMode') {
+                        changeMode();
+                    }
+                }
+            };*/
+            const displayVideoData = async(jsonData) => {
+                const videoTitle = jsonData.video.title;
+                document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
+                document.getElementById('streamer').innerHTML = jsonData.streamer.name;
+                document.getElementById('videoTitle').innerHTML = videoTitle;
+
+                document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
+                document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
+                document.title = videoTitle + ' - Ember Archive';
+                document.getElementById('video').src = ('/stream/channel/{{ channel_name }}/{{ video_name }}.mp4');
+
+                if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+            }
+            
+            const loadVideoAndChat = async () => {
+                const data = await fetchVideoData();
+                if (data) {
+                    const videoData = data.videos[0];
+                    const chatlog = videoData.chatlog;
+                    displayVideoData(chatlog);
+                    getVideoTime(chatlog);
+                }
+            };
+
+            loadVideoAndChat();
+        });
+    </script>
 </html>

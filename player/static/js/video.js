@@ -1,30 +1,3 @@
-// https://stackoverflow.com/a/47604112
-const checkVideoData = async () => {
-    const videoData = await fetch(`../files/chat.json`)
-        .then((response) => { 
-            return response.json().then((data) => {
-                console.log(data);
-                return data;
-            }).catch((err) => {
-                console.log(err);
-            }) 
-        });
-    return videoData;
-}
-   
-const displayVideoData = async () => {
-    const jsonData = await checkVideoData();
-    const videoTitle = jsonData.video.title;
-    document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
-    document.getElementById('streamer').innerHTML = jsonData.streamer.name;
-    document.getElementById('videoTitle').innerHTML = videoTitle;
-
-    document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
-    document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
-    document.title = videoTitle + ' - Ember Archive';
-    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
-}
-
 // Code modified from https://github.com/JZimz/tmi-utils to fit the data received from TwitchDownloader for the next two functions
 
 function getEmoteAsUrl (id, theme = 'light', scale = '1.0') {
@@ -136,8 +109,7 @@ function postComments(jsonData, video, videoOffset) {
     }
 }
 
-const getVideoTime = async () => {
-    const jsonData = await checkVideoData();
+function getVideoTime(jsonData) {
     const video = document.getElementById('video');
     const videoOffset = jsonData.video.start;
     setInterval(postComments, 1000, jsonData, video, videoOffset);
@@ -207,37 +179,38 @@ function changeMode() {
     // change all span elements except title
     const spanElements = document.querySelectorAll('span');
     spanElements.forEach(span => {
-        if (span.id != 'emberTitle') {
+        if (span.id != 'emberTitle' && span.id != 'archiveTitle') {
             span.classList.toggle('lightMode');
         }
     });
 }
 
-document.getElementById('video').src = '../files/video.mp4';
-displayVideoData();
-getVideoTime();
-
-
-
 
 /*
-document.getElementById('fullvidplay').onclick = function () {
-    document.getElementById('chatplay').click();
-};
+deprecated
+// https://stackoverflow.com/a/47604112
+const checkVideoData = async () => {
+    const videoData = await fetch(`../files/chat.json`)
+        .then((response) => { 
+            return response.json().then((data) => {
+                console.log(data);
+                return data;
+            }).catch((err) => {
+                console.log(err);
+            }) 
+        });
+    return videoData;
+}
+   
+const displayVideoData = async () => {
+    const jsonData = await checkVideoData();
+    const videoTitle = jsonData.video.title;
+    document.getElementById('time').innerHTML = timeSince(new Date(jsonData.video.created_at.slice(0, 10))) + ' ago';
+    document.getElementById('streamer').innerHTML = jsonData.streamer.name;
+    document.getElementById('videoTitle').innerHTML = videoTitle;
 
-document.getElementById('vidplay').onclick = function () {
-        document.getElementById('chatplay').click();
-};
-
-document.getElementById('centervidplay').onclick = function () {
-    document.getElementById('chatplay').click();
-};
-
-document.getElementById('vidback').onclick = function () {
-    document.getElementById('chatback').click();
-};
-
-document.getElementById('vidfwd').onclick = function () {
-    document.getElementById('chatfwd').click();
-};
-*/
+    document.getElementById('gameTitle').innerHTML = jsonData.video.chapters[0].gameDisplayName;
+    document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
+    document.title = videoTitle + ' - Ember Archive';
+    if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
+}*/

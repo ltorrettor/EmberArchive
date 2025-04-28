@@ -114,6 +114,49 @@ def create_app(scan_dir):
     @app.route('/channel/<channel_name>')
     def show_channel_page(channel_name):
         return render_template('channel.html', channel_name=channel_name)
+    
+    @app.route('/api/channel/<channel_name>/<video_name>')
+    def send_videos_and_chat(channel_name, video_name):
+        channels = get_file_list(scan_dir)
+        
+        ch = channels.get(channel_name)
+
+        if ch is None:
+            return jsonify({"error": "Channel not found"}), 404
+            
+        video_data = []
+        for video in ch.get_video_list():
+            if video.get_title() == video_name:
+                video_path = Path(video.get_file_path())
+                # look for a chat JSON next to the video file
+                chat_file = video_path.with_suffix('.json')
+                if chat_file.exists():
+                    with open(chat_file, 'r') as cf:
+                        chat_log = json.load(cf)
+                else:
+                    chat_log = None
+        
+            
+                video_data.append(
+                    {
+                        "title": video.get_title(),
+                        "date": video.get_date(),
+                        "duration": video.get_duration(),
+                        "filepath": str(video_path), # Have to pass as string. path type is "non-jsonable"
+                        "chatlog": chat_log, #
+                    }     
+                )
+
+        
+        
+        return jsonify({
+            "channel": channel_name,
+            "videos":  video_data
+        })
+    
+    @app.route('/channel/<channel_name>/<video_name>')
+    def show_video_page(channel_name, video_name):
+        return render_template('video.html', channel_name=channel_name, video_name=video_name)
 
     """
     path: file location
@@ -144,11 +187,24 @@ def create_app(scan_dir):
                 yield chunk
 
     # Application Target - app will be set to use stream_video()
-    @app.route('/video.mp4')
-    def stream_video():
+    @app.route('/stream/channel/<channel_name>/<video_filename>')
+    def stream_video(channel_name, video_filename):
+        channels = get_file_list(scan_dir)
+        ch = channels.get(channel_name)
+        if ch is None:
+            abort(404)
 
-        # Default testing path ********************
-        video_path = '././temp_video/video.mp4'
+        video_path_obj = None
+        for video in ch.get_video_list():
+            if Path(video.get_file_path()).name == video_filename:
+                video_path_obj = Path(video.get_file_path())
+                break
+
+        if not video_path_obj or not video_path_obj.exists():
+            abort(404)
+
+        video_path = str(video_path_obj)
+
 
 
         # Its 10 P.M... Do you know where are your files are or who they gave permissions to?..
@@ -249,3 +305,10 @@ def create_app(scan_dir):
     return app
 
 
+    '''
+    @app.route('/video.mp4')
+    def stream_video():
+
+        # Default testing path ********************
+        video_path = '././temp_video/video.mp4'
+    '''
