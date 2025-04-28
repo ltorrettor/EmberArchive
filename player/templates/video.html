@@ -114,10 +114,9 @@
                     document.getElementById('gameImage').src = jsonData.video.chapters[0].gameBoxArtUrl;
                     document.title = videoTitle + ' - Ember Archive';
                 }
-                
+
                 // if the date was included in the filename we need to reattach it to get the mp4 file
                 if (date === 'Unknown') {
-                    console.log('date');
                     video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}.mp4');
                 } else {
                     video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}' + date + '.mp4');
@@ -129,8 +128,6 @@
             const loadVideoAndChat = async () => {
                 const data = await fetchVideoData();
                 if (data) {
-                    console.log(data);
-                    console.log('hey');
                     const videoData = data.videos[0];
                     const chatlog = videoData.chatlog;
                     displayVideoData(videoData);
