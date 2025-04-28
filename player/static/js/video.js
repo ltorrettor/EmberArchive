@@ -110,6 +110,7 @@ function postComments(jsonData, video, videoOffset) {
 }
 
 function getVideoTime(jsonData) {
+    if (jsonData === null) { return; }
     const video = document.getElementById('video');
     const videoOffset = jsonData.video.start;
     setInterval(postComments, 1000, jsonData, video, videoOffset);
