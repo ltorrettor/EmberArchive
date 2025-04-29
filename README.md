@@ -16,7 +16,7 @@ Other media files may be hosted but have not been thoroughly tested.
 1. Clone this GitHub repository and `cd` into it
 2. Install the requirements with `pip install -r requirements.txt`
 3. Run the tests with `python -m pytest`
-4. Run the demo program with `python -m backend -d directorypath` where directory path is the path on your computer to the folder the media you want to show is located in.
+4. Run the demo program with `python -m backend -d {directorypath}` where directory path is the path on your computer to the folder the media you want to show is located in.
 5. Visit http://localhost:80 (or any other port you wish to host from) to access your website.
 
 ### System dependencies
