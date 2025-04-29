@@ -97,6 +97,11 @@
                 const jsonData = videoData.chatlog;
                 const date = videoData.date;
                 const video = document.getElementById('video');
+
+                // extract the file type from the filepath
+                const splitPath = videoData.filepath.split('.');
+                const fileType = splitPath[splitPath.length - 1];
+
                 if (jsonData === null) {
                     if (date != 'Unknown') {
                         document.getElementById('time').innerHTML = timeSince(new Date(date)) + ' ago';
@@ -115,11 +120,11 @@
                     document.title = videoTitle + ' - Ember Archive';
                 }
 
-                // if the date was included in the filename we need to reattach it to get the mp4 file
+                // if the date was included in the filename we need to reattach it
                 if (date === 'Unknown') {
-                    video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}.mp4');
+                    video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}.' + fileType);
                 } else {
-                    video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}' + date + '.mp4');
+                    video.src = ('/stream/channel/{{ channel_name }}/{{ video_name }}' + date + '.' + filetype);
                 }
 
                 if (localStorage.getItem('mode') == 'lightMode') { changeMode(); }
