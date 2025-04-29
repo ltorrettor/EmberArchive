@@ -2,6 +2,7 @@ from . import cli
 from . import create_app
 from flask import Flask
 from . import scanner
+from .host_data import dump_host_info
 
 app = Flask(__name__)
 
@@ -16,6 +17,9 @@ if __name__ == '__main__':
     ip = arguments.bind
     port = arguments.PORT
     #parser = create_parser()
+    
+    # collect and dump host_data
+    dump_host_info()
 
     print('Visit http://localhost:8000/index.html for the player demo')
     # dictionary of channels with the key being channel name and the value being a channel object
