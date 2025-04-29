@@ -7,7 +7,7 @@ import os
 import sys
 
 
-def create_app(scan_dir):
+def create_app(scan_dir=None):
     CHUNK_SIZE = 1024 * 1024 # CHUNK_SIZE set to 1mb default, may help to adjust this for performance/memory
     DEBUG_MODE = True
 
@@ -15,6 +15,10 @@ def create_app(scan_dir):
     PROJECT_ROOT   = os.getcwd()
     TEMPLATES_DIR  = os.path.join(PROJECT_ROOT, 'player', 'templates')
     STATIC_DIR     = os.path.join(PROJECT_ROOT, 'player', 'static')
+
+    # default path will be PROJECT_ROOT/temp_video for testing
+    if scan_dir is None:
+        scan_dir = os.path.join(PROJECT_ROOT, 'temp_video')
 
     # pass static folder to flask 
     app = Flask(
@@ -24,11 +28,30 @@ def create_app(scan_dir):
         static_url_path = '/static'
     )
     
+    # serve index.html to frontend for testing
+    @app.route('/index.html')
+    def serve_index():
+        return send_from_directory(TEMPLATES_DIR, 'index.html')
+    
+    # serve files to frontend for testing
     @app.route('/', defaults={'path': 'index.html'})
     @app.route('/<path:path>')
-    
     def serve(path):
         return send_from_directory(TEMPLATES_DIR, path)
+
+    #define filepath for "files"
+    FILES_DIR = os.path.join(PROJECT_ROOT, 'player', 'files')
+    # serve requested files to frontend 
+    @app.route('/files/<path:filename>')
+    def serve_files(filename):
+        return send_from_directory(FILES_DIR, filename)
+
+    # define filepath for "js" files
+    JS_DIR = os.path.join(STATIC_DIR, 'js')
+    # serve requested js files to frontend
+    @app.route('/js/<path:filename>')
+    def serve_js(filename):
+        return send_from_directory(JS_DIR, filename)
      
         
     
@@ -303,12 +326,3 @@ def create_app(scan_dir):
 
     
     return app
-
-
-    '''
-    @app.route('/video.mp4')
-    def stream_video():
-
-        # Default testing path ********************
-        video_path = '././temp_video/video.mp4'
-    '''
