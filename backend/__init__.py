@@ -240,7 +240,7 @@ def create_app(scan_dir=None):
         # check for file permission
         if not os.access(video_path, os.R_OK):
             print(f"INSUFFICIENT FILE PERMISSIONS")
-            sys.exit(403)
+            abort(403)
 
 
         # Get the total size of video
@@ -260,17 +260,18 @@ def create_app(scan_dir=None):
             # ERROR FLAG INVALID RANGE
             # print(f"INVALID RANGE HEADER")
             # sys.exit(416)
-            content_length = end - start + 1
+            
+            #content_length = end - start + 1
 
             # Create a Flask Response object that will iterate gnerate_video_stream() until file stream is complete
             # HTTP status 206 indicates partial data sent
             response = Response(
-                generate_video_stream(video_path, start, end),
+                generate_video_stream(video_path, 0, file_size - 1),
                 status=206,
                 mimetype='video/mp4'
             )
 
-            response.headers.add('Content-Length', str(content_length))
+            response.headers.add('Content-Length', str(file_size))
 
             return response
 
