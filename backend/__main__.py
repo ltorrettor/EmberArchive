@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # collect and dump host_data
     # dump_host_info()
 
-    print(f'Hosting on interface {ip}, port {port}')
+    print('Visit http://localhost:8000/index.html for the player demo')
     # dictionary of channels with the key being channel name and the value being a channel object
     channels = scanner.get_file_list(directory)
     for channel_name in channels:

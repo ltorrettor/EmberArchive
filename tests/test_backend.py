@@ -22,13 +22,15 @@ def test_directory_is_required():
     with pytest.raises(SystemExit):
         parser.parse_args([])
 
-def test_default_bind():
+def test_default_bind_and_port():
     parser = cli.create_parser()
-    args = parser.parse_args(['-d', './test_videos', '-P', '17100'])
+    args = parser.parse_args(['-d', './test_videos'])
 
     expected_bind = '0.0.0.0'
+    expected_port = 8080
 
     assert args.bind == expected_bind
+    assert args.PORT == expected_port
 
 def test_attribute_types():
     parser = cli.create_parser()
