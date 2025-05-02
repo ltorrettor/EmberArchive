@@ -21,7 +21,7 @@ def create_parser():
     # a flag which will bind the web server to the str argument (address) that is given
     parser.add_argument(
         '-b', '--bind', 
-        help='binds the web server to the given address which by default is "0.0.0.0"',
+        help='binds the web server to the given interface which by default is "0.0.0.0"',
         type=validate_bind_format,
         default='0.0.0.0'
     )
@@ -30,9 +30,9 @@ def create_parser():
     # a flag that will bind the web server to the given int argument (port)
     parser.add_argument(
         '-P', '--PORT',
-        help='binds the web server to a given port which by default is 80',
+        help='binds the web server to a given port',
         type=int,
-        default=80
+        required=True,
     )
 
     # directory flag
